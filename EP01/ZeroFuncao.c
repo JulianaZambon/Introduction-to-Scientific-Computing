@@ -39,14 +39,17 @@ real_t newtonRaphson(Polinomio p, real_t x0, int criterioParada, int *it, real_t
  */
 real_t bisseccao(Polinomio p, real_t a, real_t b, int criterioParada, int *it, real_t *raiz)
 {
+
 }
 
 /* Cálculo do valor px de um polinômio p */
 void calcPolinomio_rapido(Polinomio p, real_t x, real_t *px, real_t *dpx)
 {
+
 }
 
-/* Implementação com o cálculo direto do polinômio e sua derivada, usando a função pow */
+/* Implementação com o cálculo direto do polinômio e sua derivada, usando obrigatoriamente a função pow */
 void calcPolinomio_lento(Polinomio p, real_t x, real_t *px, real_t *dpx)
 {
+
 }
