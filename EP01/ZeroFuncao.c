@@ -20,6 +20,7 @@ double ulp_distance(real_t x, real_t y)
  * - Criterio-03: ULPs entre xk e xk−1 ⩽ 2
  */
 
+
 /**
  * Método de Newton-Raphson para encontrar raízes de um polinômio
  * @param p Polinômio a ser resolvido
@@ -31,24 +32,40 @@ double ulp_distance(real_t x, real_t y)
  */
 real_t newtonRaphson(Polinomio p, real_t x0, int criterioParada, int *it, real_t *raiz)
 {
-    real_t px, dpx, xk, erro;
+    real_t px, dpx, xk, erro = 0; 
     *it = 0;
 
-    calcPolinomio(p, x0, &px, &dpx); // Agora usa a função global
-    if (dpx == 0.0)
-        return -1; // Derivada nula, não pode continuar
+    calcPolinomio(p, x0, &px, &dpx);
+    if (fabs(dpx) < DBL_EPSILON) 
+        return -1; 
 
     do
     {
+        if (fabs(dpx) < DBL_EPSILON)
+            return -1; 
+
         xk = x0 - px / dpx;
-        calcPolinomio(p, xk, &px, &dpx); // Aqui também
+
+        // Se xk explodir, cancela
+        if (!isfinite(xk)) 
+            return -1;
+
+        calcPolinomio(p, xk, &px, &dpx);
+
+        // Se calcPolinomio retornar valores absurdos, aborta
+        if (!isfinite(px) || !isfinite(dpx))
+            return -1;
 
         if (criterioParada == 1)
             erro = fabs(xk - x0);
         else if (criterioParada == 2)
             erro = fabs(px);
         else if (criterioParada == 3)
+        {
             erro = ulp_distance(xk, x0);
+            if (!isfinite(erro) || erro < 0) // Adiciona proteção extra
+                return -1;
+        }
 
         x0 = xk;
         (*it)++;
@@ -57,7 +74,6 @@ real_t newtonRaphson(Polinomio p, real_t x0, int criterioParada, int *it, real_t
     *raiz = xk;
     return erro;
 }
-
 
 /**
  * Método da Bissecção para encontrar raízes de um polinômio
@@ -69,45 +85,56 @@ real_t newtonRaphson(Polinomio p, real_t x0, int criterioParada, int *it, real_t
  * @param raiz Ponteiro para armazenar a raiz encontrada
  * @return Valor do erro final
  */
-real_t bisseccao(Polinomio p, real_t a, real_t b, int criterioParada, int *it, real_t *raiz)
-{
-    real_t px_a, px_b, xk, erro;
+real_t bisseccao(Polinomio p, real_t a, real_t b, int criterioParada, int *it, real_t *raiz) {
+    real_t fa, fb, xm, fm, erro, xm_anterior;
     *it = 0;
 
-    calcPolinomio(p, a, &px_a, NULL);
-    calcPolinomio(p, b, &px_b, NULL);
+    // Calcular os valores do polinômio nos extremos
+    calcPolinomio(p, a, &fa, NULL);
+    calcPolinomio(p, b, &fb, NULL);
+    printf("f(%lf) = %lf, f(%lf) = %lf\n", a, fa, b, fb);
+    // Verificar se o intervalo contém uma raiz
+    if (fa * fb > 0) {
+        printf("Erro: O intervalo [%.6lf, %.6lf] não contém uma raiz.\n", a, b);
+        return -1;
+    }
 
-    if (px_a * px_b > 0.0)
-        return NAN;
+    xm_anterior = a; // Inicializa com um dos extremos
+    erro = fabs(b - a) / 2.0; // Inicializa o erro para evitar lixo de memória
 
-    do
-    {
-        xk = (a + b) / 2.0;
-        real_t px_k;
-        calcPolinomio(p, xk, &px_k, NULL);
+    do {
+        xm = (a + b) / 2.0;
+        calcPolinomio(p, xm, &fm, NULL);
 
-        if (px_k == 0.0)
-            break;
+        // Escolher o critério de parada
+        if (criterioParada == 1) {
+            erro = fabs(b - a) / 2.0;
+        } else if (criterioParada == 2) {
+            erro = fabs(fm);
+        } else if (criterioParada == 3) {
+            erro = ulp_distance(xm, xm_anterior);
+        } else {
+            printf("Erro: Critério de parada inválido (%d).\n", criterioParada);
+            return -1;
+        }
 
-        if (px_a * px_k < 0.0)
-            b = xk;
-        else
-            a = xk;
+        // Atualizar intervalo
+        if (fa * fm < 0) {
+            b = xm;
+            fb = fm;
+        } else {
+            a = xm;
+            fa = fm;
+        }
 
-        if (criterioParada == 1)
-            erro = fabs(b - a);
-        else if (criterioParada == 2)
-            erro = fabs(px_k);
-        else if (criterioParada == 3)
-            erro = ulp_distance(xk, a);
-
+        xm_anterior = xm;
         (*it)++;
+
     } while (erro > 1e-6 && *it < MAXIT);
 
-    *raiz = xk;
+    *raiz = xm;
     return erro;
 }
-
 
 /**
  * Implementação do método de Horner para calcular um polinômio e sua derivada.
@@ -117,14 +144,17 @@ void calcPolinomio_rapido(Polinomio p, real_t x, real_t *px, real_t *dpx)
     int grau = p.grau;
     real_t *coef = p.p;
 
-    // Inicializa o polinômio e sua derivada
-    *px = coef[0];
-    real_t derivada = 0.0;
+    *px = coef[grau]; // Começa com o termo de maior grau
+    real_t derivada = coef[grau] * grau; // Primeiro coeficiente derivado
 
-    for (int i = 1; i <= grau; i++)
+    printf("\nCalculando P(x) e P'(x) usando Horner:\n");
+
+    for (int i = grau - 1; i >= 0; i--)
     {
-        derivada = derivada * x + *px; // Calcula derivada usando Horner
-        *px = *px * x + coef[i];       // Calcula p(x) usando Horner
+        derivada = derivada * x + coef[i] * i;
+        *px = *px * x + coef[i];
+
+        printf("Iteração %d: P(x) = %.6lf, P'(x) = %.6lf\n", i, *px, derivada);
     }
 
     if (dpx)
