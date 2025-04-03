@@ -11,6 +11,8 @@
 #define EPS 1.0e-6
 #define ULPS 2
 
+
+
 /*
  * ATENÇÃO: Os valores reais devem ser representados em ponto flutuante de precisão dupla (tipo double)
  */
@@ -21,6 +23,9 @@ typedef struct
   real_t *p; // p é um vetor de tamanho grau+1 contendo os coeficientes do polinômio
   int grau;
 } Polinomio;
+
+extern void (*calcPolinomio)(Polinomio, real_t, real_t *, real_t *);
+
 
 // Métodos
 // Retornam valor do erro quando método finalizou. Este valor depende de tipoErro

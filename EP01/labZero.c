@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <float.h>
-#include <fenv.h> // Para arredondamento
+#include <fenv.h>
 
 #include "utils.h"
 #include "ZeroFuncao.h"
@@ -39,38 +39,62 @@
  * - newton <raiz> <valor_crit-03> <it> <tempo>
  */
 
-// Variável global para armazenar o ponteiro da função de cálculo do polinômio
-void (*calcPolinomio)(Polinomio, real_t, real_t *, real_t *);
+// Função para executar os métodos de bissecção e Newton-Raphson com os critérios
+// de parada e calcPolinomioLento e calcPolinomioRapido passados como parâmetros
+void executarMetodos(Polinomio pol, real_t a, real_t b)
+{
+  int it;
+  real_t raiz, erro;
 
-// Funções de execução de métodos, cada uma com 3 critérios de parada
+  // Bissecção
+  for (int i = 1; i <= 3; ++i)
+  {
+    erro = bisseccao(pol, a, b, i, &it, &raiz);
+    double tempo = timestamp();
+    printf("bissec %.15e %.15e %d %.8e\n", raiz, erro, it, tempo);
+  }
 
+  // Newton-Raphson
+  for (int i = 1; i <= 3; ++i)
+  {
+    erro = newtonRaphson(pol, a, i, &it, &raiz);
+    double tempo = timestamp();
+    printf("newton %.15e %.15e %d %.8e\n", raiz, erro, it, tempo);
+  }
+}
 
 int main()
 {
-  // arredondamento para baixo 
+  // arredondamento para baixo
   fesetround(FE_DOWNWARD);
 
   real_t a, b;
   Polinomio pol;
 
-  // Leitura do polinômio:
+  // Leitura do polinômio
   scanf("%d", &pol.grau);
+  pol.p = malloc((pol.grau + 1) * sizeof(real_t));
+  if (!pol.p)
+  {
+    fprintf(stderr, "Erro de alocação\n");
+    return 1;
+  }
+
   for (int i = pol.grau; i >= 0; --i) // Lê os coeficientes do polinômio
     scanf("%lf", &pol.p[i]);
   scanf("%lf %lf", &a, &b); // Intervalo onde está uma das raízes
-
 
   // vai executar os métodos cada um 3 vezes com calcPolinomio_rapido
   // com os critérios de parada 1, 2 e 3
   printf("RAPIDO:\n");
   calcPolinomio = calcPolinomio_rapido;
-
+  executarMetodos(pol, a, b);
 
   // vai executar os métodos cada um 3 vezes com calcPolinomio_lento
   // com os critérios de parada 1, 2 e 3
   printf("LENTO:\n");
   calcPolinomio = calcPolinomio_lento;
-  
+  executarMetodos(pol, a, b);
 
   return 0;
 }
