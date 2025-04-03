@@ -51,10 +51,6 @@ int main()
   printf("RAPIDO:\n");
   printf("\n");
   calcPolinomio = calcPolinomio_rapido;
-  real_t resultado;
-  calcPolinomio(pol, 0, &resultado, NULL);
-  printf("P(0) = %.6lf (esperado: -30.000000)\n", resultado);
-  printf("\n");
   executarMetodos(pol, a, b);
   printf("\n");
 
