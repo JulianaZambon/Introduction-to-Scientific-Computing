@@ -11,8 +11,6 @@
 #define EPS 1.0e-6
 #define ULPS 2
 
-
-
 /*
  * ATENÇÃO: Os valores reais devem ser representados em ponto flutuante de precisão dupla (tipo double)
  */
