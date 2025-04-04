@@ -79,5 +79,9 @@ int main()
     calcPolinomio = calcPolinomio_lento;
     executarMetodos(pol, a, b);
 
+    // Libera a memória alocada para os coeficientes do polinômio
+    free(pol.p);
+    pol.p = NULL; // Evita ponteiro solto
+
     return 0;
 }

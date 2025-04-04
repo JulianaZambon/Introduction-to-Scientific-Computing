@@ -19,7 +19,7 @@ double ulp_distance(real_t x, real_t y)
 }
 
 /*
- * Critérios de parada rigorosos para os métodos numéricos:
+ * Critérios de parada para os métodos numéricos:
  * - Critério 1 (Erro Absoluto): |xk - xk-1| ≤ 10⁻⁶
  * - Critério 2 (Erro da Função): |f(xk)| ≤ sqrt(DBL_EPSILON) → tolerância da máquina
  * - Critério 3 (Erro Relativo): ULPs entre xk e xk-1 ≤ 2
@@ -42,7 +42,7 @@ real_t newtonRaphson(Polinomio p, real_t x0, int criterioParada, int *it, real_t
     real_t fx, dfx, x1;
     *it = 0;
 
-    // Calcula f(x0) e f'(x0)
+    // Calcula f(x0) e f'(x0), sendo x0 o chute inicial
     calcPolinomio(p, x0, &fx, &dfx);
 
     // Se a derivada for zero, o método falha (evita divisão por zero)
