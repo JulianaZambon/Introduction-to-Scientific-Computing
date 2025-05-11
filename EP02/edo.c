@@ -11,6 +11,15 @@
 #include "utils.h"
 #include "edo.h"
 
+// Recebe a estrutura de dados EDo e retorna a estrutura Tridiag,
+// que representa o sistema linear tridiagonal
+
+// A matriz tridiagonal é representada pelos vetores:
+// D: diagonal principal
+// Di: diagonal inferior (abaixo da diagonal principal)
+// Ds: diagonal superior (acima da diagonal principal)
+// B: vetor de termos independentes (lado direito do sistema)
+// A função também calcula a malha espacial com base nos parâmetros fornecidos na EDo.
 Tridiag *genTridiag(EDo *edo)
 {
   Tridiag *sl;
@@ -30,8 +39,11 @@ Tridiag *genTridiag(EDo *edo)
   for (int i = 0; i < n; ++i)
   {
     x = edo->a + (i + 1) * h;
+    // Calcula o valor da função no ponto x usando a equação diferencial dada
+    // rx = r1 * x + r2 * x^2 + r3 * cos(x) + r4 * exp(x)
     rx = edo->r1 * x + edo->r2 * x * x + edo->r3 * cos(x) + edo->r4 * exp(x);
 
+    // Preenche as diagonais e o vetor B do sistema linear tridiagonal
     sl->B[i] = h * h * rx;
     sl->Di[i] = 1 - h * edo->p / 2.0;
     sl->D[i] = -2 + h * h * edo->q;
@@ -44,7 +56,14 @@ Tridiag *genTridiag(EDo *edo)
   return sl;
 }
 
-// Exibe SL na saída padrão
+// Exibe o sistema linear tridiagonal na saída padrão no formato:
+// D1 Di1 Ds1 B1
+// D2 Di2 Ds2 B2
+// ...
+// Dn Din Dsn Bn
+// Onde D, Di, Ds são os elementos da diagonal principal, inferior e superior,
+// respectivamente, e B é o vetor de termos independentes.
+// O número de pontos internos (n) é impresso na primeira linha.
 void prnEDOsl(EDo *edoeq)
 {
   int n = edoeq->n, i, j;
@@ -56,13 +75,17 @@ void prnEDOsl(EDo *edoeq)
   for (i = 0; i < n; ++i)
   {
     x = edoeq->a + (i + 1) * h;
+    // Calcula o valor da função no ponto x usando a equação diferencial dada
+    // rx = r1 * x + r2 * x^2 + r3 * cos(x) + r4 * exp(x)
     rx = edoeq->r1 * x + edoeq->r2 * x * x + edoeq->r3 * cos(x) + edoeq->r4 * exp(x);
 
+    // Preenche as diagonais e o vetor B do sistema linear tridiagonal
     b = h * h * rx;
     di = 1 - h * edoeq->p / 2.0;
     d = -2 + h * h * edoeq->q;
     ds = 1 + h * edoeq->p / 2.0;
 
+    // Imprime os elementos do sistema linear tridiagonal
     for (j = 0; j < n; ++j)
     {
       if (i == j)
