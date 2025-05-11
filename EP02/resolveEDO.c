@@ -41,8 +41,9 @@ int main()
     status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
     while (status == 4)
     {
-        struct timespec start, end;
-        clock_gettime(CLOCK_MONOTONIC, &start);
+        // usando a função timestamp() da lib utils.h
+        // para medir o tempo de execução
+        rtime_t start = timestamp();
 
         Tridiag *sl = genTridiag(&edo);
 
@@ -56,9 +57,10 @@ int main()
             printf(FORMAT, sol[i]);
         printf("\n");
 
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        double tempo_exec = (end.tv_sec - start.tv_sec) * 1000.0 + (end.tv_nsec - start.tv_nsec) / 1000000.0;
-        printf("  %.8f\n", tempo_exec);
+        rtime_t end = timestamp();
+        // Imprime o tempo de execução em 8 casas decimais e em notação científica
+        // milisegundos
+        printf("  %.8e\n", end - start);
 
         // Leitura antecipada
         status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);

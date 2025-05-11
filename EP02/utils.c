@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 199309L
+
 /*
  * Nome: Juliana Zambon
  * GRR: 20224168
@@ -29,7 +31,7 @@ rtime_t timestamp(void)
 
 /* Gera string '<baseName>_n'
  * Por exemplo, se baseName = "ABC" e n = 10,
- *  Função retorna a string "ABC_10"
+ * Função retorna a string "ABC_10"
  * Útil para gerar marcadores para LIKWID
  */
 string_t markerName(string_t baseName, int n)
