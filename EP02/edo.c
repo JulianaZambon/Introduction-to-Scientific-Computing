@@ -110,3 +110,24 @@ void prnEDOsl(EDo *edoeq)
     printf("\n");
   }
 }
+
+// Método de fatoração LU para resolver o sistema linear tridiagonal
+void resolveLU(Tridiag *sl, real_t *sol)
+{
+    int n = sl->n;
+
+    // Fatoração LU
+    for (int i = 1; i < n; ++i)
+    {
+        sl->Di[i] /= sl->D[i - 1];
+        sl->D[i] -= sl->Di[i] * sl->Ds[i - 1];
+        sl->B[i] -= sl->Di[i] * sl->B[i - 1];
+    }
+
+    // Resolução do sistema linear
+    sol[n - 1] = sl->B[n - 1] / sl->D[n - 1];
+    for (int i = n - 2; i >= 0; --i)
+    {
+        sol[i] = (sl->B[i] - sl->Ds[i] * sol[i + 1]) / sl->D[i];
+    }
+}

@@ -33,5 +33,6 @@ typedef struct
 
 Tridiag *genTridiag(EDo *edoeq);
 void prnEDOsl(EDo *edoeq);
+void resolveLU(Tridiag *sl, real_t *sol);
 
 #endif // __EQDIFF_H__
