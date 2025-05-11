@@ -103,7 +103,8 @@ void prnEDOsl(EDo *edoeq)
     else if (i == n - 1)
       b -= edoeq->yb * (1 + h * edoeq->p / 2.0);
 
-    printf(" | ");
+    // gerava saída que não era compatível com o especificado no enunciado, causando erro no script de teste
+    // printf(" | ");
     printf(FORMAT, b);
 
     printf("\n");
