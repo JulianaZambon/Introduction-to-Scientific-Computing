@@ -9,6 +9,8 @@
 
 typedef double real_t;
 
+// Macro para definir o número de casas decimais na impressão
+// Os valores de saída devem ser mostrados com 15  casas decimais (formato "%.15e")
 #define FORMAT "%23.15e"
 
 // Sistema linear Tri-diagonal

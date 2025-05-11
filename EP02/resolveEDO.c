@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 199309L
+
 /*
  * Nome: Juliana Zambon
  * GRR: 20224168
@@ -7,6 +9,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <time.h> // Para medir o tempo de execução
+#include <fenv.h> // Adicionado para controle do arredondamento
 
 #include "utils.h"
 #include "edo.h"
@@ -34,23 +38,30 @@ void resolveLU(Tridiag *sl, real_t *sol)
 
 int main()
 {
+    // Configurar arredondamento para baixo
+    fesetround(FE_DOWNWARD);
+
     // Estrutura para armazenar os dados da EDO
     EDo edo;
 
-    // Leitura da quantidade de pontos da malha
+    // 1ª linha: Leitura da quantidade de pontos da malha
     scanf("%d", &edo.n);
 
-    // Leitura do intervalo [a, b]
+    // 2ª linha: Leitura do intervalo [a, b]
     scanf("%lf %lf", &edo.a, &edo.b);
 
-    // Leitura dos valores de contorno y(a) e y(b)
+    // 3ª linha: Leitura dos valores de contorno y(a) e y(b)
     scanf("%lf %lf", &edo.ya, &edo.yb);
 
-    // Leitura dos coeficientes p e q da EDO
+    // 4ª linha: Leitura dos coeficientes p e q da EDO genérica
+    // EDO genérica: y''(x) + p(x)y'(x) + q(x)y(x) = r(x)
     scanf("%lf %lf", &edo.p, &edo.q);
 
-    // Leitura dos coeficientes r1, r2, r3, r4 da função r(x)
-    scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
+    // 5ª linha em diante: Leitura dos coeficientes r1, r2, r3 e r4
+    // da a definição da função r(x), representando diversas EDO's
+    char linha[100];
+    fgets(linha, sizeof(linha), stdin);
+    sscanf(linha, "%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
 
     // Geração do sistema linear tridiagonal correspondente à EDO
     Tridiag *sl = genTridiag(&edo);
@@ -66,59 +77,53 @@ int main()
         exit(EXIT_FAILURE);
     }
 
-    // Medição do tempo de execução
-    clock_t start = clock();
+    // Medição do tempo de execução usando clock_gettime()
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);
 
     // Resolução do sistema linear tridiagonal
-    // Deve ser feito usando o método da Fatoração LU
-
     resolveLU(sl, sol);
 
     // Medição do tempo de execução
-    clock_t end = clock();
-    double time_spent = (double)(end - start) / CLOCKS_PER_SEC * 1000; // em milissegundos
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    double time_spent = (end.tv_sec - start.tv_sec) * 1000.0 + (end.tv_nsec - start.tv_nsec) / 1000000.0; // em milissegundos
 
     // Saída padrão (stdout) para cada EDO:
-    // - Os valores numéricos devem ser mostrados com 15 casas decimais (formato "%.15e").
-    // - O tempo de solução deve ser exibido com 8 casas decimais (formato "%.8e").
-
-    // A saída deve conter:
-    // 1. A ordem do sistema linear tridiagonal (em uma única linha).
-    // 2. A matriz aumentada do sistema tridiagonal (coeficientes e termos independentes).
-    // 3. A solução do sistema linear, obtida por meio do Método de Fatoração LU.
-    // 4. O tempo, em milissegundos, gasto no cálculo da solução.
+    // 1. Ordem do sistema linear
+    // 2. Matriz aumentada
+    // 3. Solução
+    // 4. Tempo
 
     // Impressão da saída
-    // ordem do sistema linear
     printf("%d\n", sl->n);
 
-    // matriz aumentada
+    // Matriz aumentada
     for (int i = 0; i < sl->n; ++i)
     {
         for (int j = 0; j < sl->n; ++j)
         {
             double val = 0.0;
-
             if (j == i)
                 val = sl->D[i];
             else if (j == i - 1)
                 val = sl->Ds[i - 1];
             else if (j == i + 1)
                 val = sl->Di[i];
-
-            printf("% .15e ", val);
+            printf(FORMAT, val);
         }
-
-        printf("% .15e\n", sl->B[i]); // vetor B ao final da linha
+        // Vetor B ao final da linha
+        printf(FORMAT, sl->B[i]);
+        printf("\n");
     }
 
-    // solução do sistema linear
+    // Solução do sistema linear
     for (int i = 0; i < sl->n; ++i)
     {
-        printf("%.15e%c", sol[i], (i == sl->n - 1) ? '\n' : ' ');
+        printf(FORMAT, sol[i]);
     }
 
-    // tempo de solução
+    // Tempo de solução
+    printf("\n");
     printf("%.8e\n", time_spent);
 
     // Liberação da memória alocada
@@ -128,4 +133,6 @@ int main()
     free(sl->Ds);
     free(sl->B);
     free(sl);
+
+    return 0; // Retorno de sucesso
 }
