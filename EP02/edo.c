@@ -19,7 +19,7 @@
 // Di: diagonal inferior (abaixo da diagonal principal)
 // Ds: diagonal superior (acima da diagonal principal)
 // B: vetor de termos independentes (lado direito do sistema)
-// A função também calcula a malha espacial com base nos parâmetros fornecidos na EDo.
+// A função também calcula a malha espacial com base nos parâmetros fornecidos na EDO.
 Tridiag *genTridiag(EDo *edo)
 {
   Tridiag *sl;
