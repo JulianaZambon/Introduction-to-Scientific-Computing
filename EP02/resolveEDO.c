@@ -15,8 +15,13 @@
 #include "utils.h"
 #include "edo.h"
 
+#include <likwid.h> // Para medir o desempenho
+
 int main()
 {
+    // Inicializa o LIKWID
+    LIKWID_MARKER_INIT;
+
     // Configurar arredondamento para baixo
     fesetround(FE_DOWNWARD);
 
@@ -41,6 +46,9 @@ int main()
     status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
     while (status == 4)
     {
+        // Marcar o início da medição de desempenho
+        LIKWID_MARKER_START("solve_EDO");
+
         // usando a função timestamp() da lib utils.h
         // para medir o tempo de execução
         rtime_t start = timestamp();
@@ -51,7 +59,10 @@ int main()
         printf("\n");
 
         real_t *sol = (real_t *)calloc(edo.n, sizeof(real_t));
+
+        LIKWID_MARKER_START("solve_EDO_LU");
         resolveLU(sl, sol);
+        LIKWID_MARKER_STOP("solve_EDO_LU");
 
         for (int i = 0; i < edo.n; ++i)
             printf(FORMAT, sol[i]);
@@ -61,6 +72,9 @@ int main()
         // Imprime o tempo de execução em 8 casas decimais e em notação científica
         // milisegundos
         printf("  %.8e\n", end - start);
+
+        // Marcar o fim da medição de desempenho
+        LIKWID_MARKER_STOP("solve_EDO");
 
         // Leitura antecipada
         status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
@@ -75,6 +89,9 @@ int main()
         free(sl);
         free(sol);
     }
+
+    // Finaliza o LIKWID
+    LIKWID_MARKER_CLOSE;
 
     return 0;
 }

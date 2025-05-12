@@ -1,23 +1,19 @@
 #!/bin/bash
 
-# Verifica se o programa resolveEDO está presente
-if ! command -v resolveEDO &> /dev/null
-then
-    echo "O programa resolveEDO não foi encontrado."
-    exit 1
-fi
+# Caminho do executável
+EXEC=./resolveEDO
 
-# Executa o programa resolveEDO com o arquivo de entrada, redirecionando a saída para /dev/null para não exibir
-./resolveEDO input.txt > /dev/null 2>&1 &
+# 1. Executa o programa normalmente (para obter a saída)
+$EXEC
 
-# Captura o PID do processo resolveEDO
-PID=$!
+# Adiciona uma quebra de linha
+echo ""
 
-# Exibe as saídas das matrizes e os contadores de instruções aritméticas
-# Inicia o LIKWID monitorando o contador FP_ARITH_INST_RETIRED_SCALAR_DOUBLE
-# e mostra a saída de todas as operações
-likwid-perfctr -p $PID -g FLOPS_DP -T FP_ARITH_INST_RETIRED_SCALAR_DOUBLE -C 0
+# 2. Mede instruções FP para a fatoração LU
+likwid-perfctr -C 0 -g FLOPS_DP -f -O $EXEC < entrada.txt 2>&1 | grep FP_ARITH_INST_RETIRED_SCALAR_DOUBLE | awk -F ',' '{print $1 "," $2}'
 
-# Espera o processo terminar
-wait $PID
+# 3. Mede instruções FP para resolver a 1ª EDO
+likwid-perfctr -C 0 -g FLOPS_DP -f -O $EXEC < entrada.txt 2>&1 | grep FP_ARITH_INST_RETIRED_SCALAR_DOUBLE | awk -F ',' '{print $1 "," $2}'
 
+# 4. Mede instruções FP para resolver a 2ª EDO
+likwid-perfctr -C 0 -g FLOPS_DP -f -O $EXEC < entrada.txt 2>&1 | grep FP_ARITH_INST_RETIRED_SCALAR_DOUBLE | awk -F ',' '{print $1 "," $2}'
