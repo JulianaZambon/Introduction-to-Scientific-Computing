@@ -1,13 +1,16 @@
 # PROGRAMA
-    PROG = resolveEDO
-    OBJS = resolveEDO.o edo.o utils.o # mod1.o mod2.o
+PROG = resolveEDO
+OBJS = resolveEDO.o edo.o utils.o # mod1.o mod2.o
 
 # Compilador
-    CC     = gcc
+CC     = gcc
 
-# Acrescentar onde apropriado as opções para incluir uso da biblioteca LIKWID
-    CFLAGS = -O0
-    LFLAGS = -lm
+# Detecta automaticamente o diretório base do LIKWID
+LIKWID_HOME := $(dir $(shell which likwid-perfctr))../
+
+# Flags para uso da biblioteca LIKWID
+CFLAGS = -O0 -I$(LIKWID_HOME)/include
+LFLAGS = -lm -L$(LIKWID_HOME)/lib -llikwid
 
 # Lista de arquivos para distribuição. Acrescentar mais arquivos se necessário.
 DISTFILES = *.c *.h LEIAME* Makefile edos.dat

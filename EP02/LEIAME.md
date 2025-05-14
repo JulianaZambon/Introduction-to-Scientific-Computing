@@ -10,6 +10,9 @@
 
 ---
 
+## Alterações realizadas
+
+
 ## Limitações do Programa
 
 Este programa apresenta limitações nos seguintes casos:
