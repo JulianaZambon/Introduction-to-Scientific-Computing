@@ -11,7 +11,9 @@
 ---
 
 ## Alterações realizadas
-Foi adicionada a seguinte linha ao `Makefile` para permitir a detecção automática do diretório base do LIKWID, para o funcionamento do script `ep02_script.sh` e do marco de métricas no arquivo `resolveEDO.c`:
+Foi adicionada a seguinte linha ao `Makefile` para permitir a detecção
+automática do diretório base do LIKWID, para o funcionamento do script
+`ep02_script.sh` e do marco de métricas no arquivo `resolveEDO.c`:
 
 ```makefile
 LIKWID_HOME := $(dir $(shell which likwid-perfctr))../

@@ -1,5 +1,4 @@
 #define _POSIX_C_SOURCE 199309L
-
 /*
  * Nome: Juliana Zambon
  * GRR: 20224168
@@ -38,7 +37,6 @@ int main()
     scanf("%lf %lf", &edo.ya, &edo.yb);
 
     // 4ª linha: Leitura dos coeficientes p e q da EDO genérica
-    // EDO genérica: y''(x) + p(x)y'(x) + q(x)y(x) = r(x)
     scanf("%lf %lf", &edo.p, &edo.q);
 
     // 5ª linha: Leitura dos coeficientes r1, r2, r3 e r4
@@ -46,11 +44,10 @@ int main()
     status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
     while (status == 4)
     {
-        // Marcar o início da medição de desempenho
+        // Métrica do cálculo de cada solução das EDO's 
+        /*--------------------------------------------*/
         LIKWID_MARKER_START("solve_EDO");
 
-        // usando a função timestamp() da lib utils.h
-        // para medir o tempo de execução
         rtime_t start = timestamp();
 
         Tridiag *sl = genTridiag(&edo);
@@ -60,27 +57,30 @@ int main()
 
         real_t *sol = (real_t *)calloc(edo.n, sizeof(real_t));
 
-        LIKWID_MARKER_START("solve_EDO_LU");
+        LIKWID_MARKER_STOP("solve_EDO");
+        /*--------------------------------------------*/
+
+
+        // Métrica do processo de fatoração LU
+        /*--------------------------------------------*/
+        LIKWID_MARKER_START("solve_LU");
+
         resolveLU(sl, sol);
-        LIKWID_MARKER_STOP("solve_EDO_LU");
+
+        LIKWID_MARKER_STOP("solve_LU");
+        /*--------------------------------------------*/
 
         for (int i = 0; i < edo.n; ++i)
             printf(FORMAT, sol[i]);
         printf("\n");
 
         rtime_t end = timestamp();
-        // Imprime o tempo de execução em 8 casas decimais e em notação científica
-        // milisegundos
         printf("  %.8e\n", end - start);
 
-        // Marcar o fim da medição de desempenho
-        LIKWID_MARKER_STOP("solve_EDO");
-
-        // Leitura antecipada
         status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
 
         if (status == 4)
-            printf("\n"); // Só imprime se houver mais dados
+            printf("\n");
 
         free(sl->D);
         free(sl->Di);
@@ -90,7 +90,6 @@ int main()
         free(sol);
     }
 
-    // Finaliza o LIKWID
     LIKWID_MARKER_CLOSE;
 
     return 0;
