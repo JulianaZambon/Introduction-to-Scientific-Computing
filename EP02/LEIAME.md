@@ -35,5 +35,5 @@ void resolveLU(Tridiag *sl, real_t *sol);
 ```
 
 O arquivo `entradateste.txt` contém o exemplo de entrada fornecido no enunciado do EP02,
-mas é possível rodar com outros arquivos também, mas o arquivo de entrada só poderá conter 
+é possível rodar com outros arquivos também, mas o arquivo de entrada só poderá conter 
 apenas um exemplo de entrada.
