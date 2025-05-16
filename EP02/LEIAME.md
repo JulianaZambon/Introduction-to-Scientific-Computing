@@ -30,6 +30,8 @@ void resolveLU(Tridiag *sl, real_t *sol);
 
 ## Como rodar o script com LIKWID
 
+Rode o seguinte comando:
+
 ```ep02_script.sh
 ./ep02_script.sh < entradateste.txt
 ```
