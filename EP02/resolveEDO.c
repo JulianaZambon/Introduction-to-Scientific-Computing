@@ -42,6 +42,7 @@ int main()
     // 5ª linha: Leitura dos coeficientes r1, r2, r3 e r4
     int status;
     status = scanf("%lf %lf %lf %lf", &edo.r1, &edo.r2, &edo.r3, &edo.r4);
+    // Enquanto ler os coeficientes r1, r2, r3 e r4
     while (status == 4)
     {
         // Métrica do cálculo de cada solução das EDO's 
