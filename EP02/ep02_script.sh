@@ -23,13 +23,7 @@ echo ""
 
 # 2. Para cada conjunto de coeficientes r1 r2 r3 r4, executa o programa com LIKWID no modo marcador (-m)
 #    e extrai a métrica FP_ARITH_INST_RETIRED_SCALAR_DOUBLE das regiões "solve_EDO" e "solve_LU".
-#    Essa métrica representa a quantidade de instruções aritméticas de ponto flutuante em dupla precisão (escalares).
 
-
-    # 1ª linha: quantidade de pontos da malha da EDO;
-    # 2ª linha: intervalo a e b onde a EDO é válida;
-    # 3ª linha: os valores de contorno  y(a) e y(b);
-    # 4ª linha: os coeficientes p e q da EDO genérica
 NUM_LINHAS_FIXAS=4
 
 awk 'NF==4' entradateste.txt | while read r1 r2 r3 r4; do

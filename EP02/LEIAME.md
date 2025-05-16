@@ -19,9 +19,8 @@ automática do diretório base do LIKWID, para o funcionamento do script
 LIKWID_HOME := $(dir $(shell which likwid-perfctr))../
 ```
 
-Foi adicionada a função `resolveLU(Tridiag *sl, real_t *sol)` ao 
-arquivo `edo.c` e a lib `edo.h` para a realização do método de 
-fatoração LU.
+Implementada a função resolveLU(Tridiag *sl, real_t *sol) no arquivo `edo.c`
+e declarada em `edo.h`, para a resolução de EDOs via fatoração LU:
 
 ```edo.h
 void resolveLU(Tridiag *sl, real_t *sol);
@@ -36,6 +35,6 @@ Rode o seguinte comando:
 ./ep02_script.sh < entradateste.txt
 ```
 
-O arquivo `entradateste.txt` contém o exemplo de entrada fornecido no enunciado do EP02,
-é possível rodar com outros arquivos também, mas o arquivo de entrada só poderá conter 
-apenas um exemplo de entrada.
+O arquivo `entradateste.txt` contém o exemplo de entrada fornecido no enunciado do EP02.
+Você pode utilizar outros arquivos de entrada, mas cada execução deve conter apenas um exemplo por arquivo.
+
