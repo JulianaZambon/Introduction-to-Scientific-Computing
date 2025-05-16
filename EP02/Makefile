@@ -9,7 +9,7 @@ CC     = gcc
 LIKWID_HOME := $(dir $(shell which likwid-perfctr))../
 
 # Flags para uso da biblioteca LIKWID
-CFLAGS = -O0 -I$(LIKWID_HOME)/include
+CFLAGS = -O0 -DLIKWID_PERFMON -I$(LIKWID_HOME)/include
 LFLAGS = -lm -L$(LIKWID_HOME)/lib -llikwid
 
 # Lista de arquivos para distribuição. Acrescentar mais arquivos se necessário.
