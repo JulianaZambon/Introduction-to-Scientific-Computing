@@ -19,8 +19,21 @@ automática do diretório base do LIKWID, para o funcionamento do script
 LIKWID_HOME := $(dir $(shell which likwid-perfctr))../
 ```
 
-## Limitações do Programa
+Foi adicionada a função `resolveLU(Tridiag *sl, real_t *sol)` ao 
+arquivo `edo.c` e a lib `edo.h` para a realização do método de 
+fatoração LU.
 
-Este programa apresenta limitações nos seguintes casos:
+```edo.h
+void resolveLU(Tridiag *sl, real_t *sol);
+```
 
-### Exemplos de limitações:
+
+## Como rodar o script com LIKWID
+
+```ep02_script.sh
+./ep02_script.sh < entradateste.txt
+```
+
+O arquivo `entradateste.txt` contém o exemplo de entrada fornecido no enunciado do EP02,
+mas é possível rodar com outros arquivos também, mas o arquivo de entrada só poderá conter 
+apenas um exemplo de entrada.

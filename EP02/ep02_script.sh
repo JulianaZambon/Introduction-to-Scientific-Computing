@@ -25,8 +25,6 @@ echo ""
 #    e extrai a métrica FP_ARITH_INST_RETIRED_SCALAR_DOUBLE das regiões "solve_EDO" e "solve_LU".
 #    Essa métrica representa a quantidade de instruções aritméticas de ponto flutuante em dupla precisão (escalares).
 
-# likwid-perfctr -C 0 -g FLOPS_DP -m ./resolveEDO < entradateste.txt
-
 
     # 1ª linha: quantidade de pontos da malha da EDO;
     # 2ª linha: intervalo a e b onde a EDO é válida;
@@ -37,7 +35,9 @@ NUM_LINHAS_FIXAS=4
 awk 'NF==4' entradateste.txt | while read r1 r2 r3 r4; do
     # Executa e captura as linhas de interesse
     OUTPUT=$( (head -n $NUM_LINHAS_FIXAS entradateste.txt; echo "$r1 $r2 $r3 $r4") | \
-    likwid-perfctr -C 0 -g FLOPS_DP -m "$EXEC" 2>&1 )
+    # likwid-perfctr -C 0 -g FLOPS_DP -m ./resolveEDO < entradateste.txt
+    script -q -c "likwid-perfctr -C 0 -g FLOPS_DP -m \"$EXEC\"" /dev/null 2>&1 )
+    
 
     # Extrai e imprime só o solve_EDO, sem o prefixo "solve_EDO_"
     echo "$OUTPUT" | awk '
