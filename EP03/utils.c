@@ -1,3 +1,9 @@
+/*
+ * Nome: Juliana Zambon
+ * GRR: 20224168
+ * Login DINF: jz22
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>

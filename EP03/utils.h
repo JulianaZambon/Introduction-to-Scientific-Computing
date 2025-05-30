@@ -1,3 +1,9 @@
+/*
+ * Nome: Juliana Zambon
+ * GRR: 20224168
+ * Login DINF: jz22
+ */
+
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
