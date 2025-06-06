@@ -99,3 +99,34 @@ Create a script that, after executing the `resolveEDO` program, uses the LIKWID 
 
 ---
 
+
+## EP03: Curve Fitting Optimization
+
+### Objective
+Improve and evaluate the performance of the `ajustePol` curve fitting program. The program calculates an N-degree polynomial that fits a curve described by K points.
+
+### Example Program Execution
+
+**Input (stdin):**
+
+N
+</br>
+K
+</br>
+x1 y1
+</br>
+x2 y2
+</br>
+…
+</br>
+xK yK
+</br>
+
+**Output (stdout):**
+```c
+a0 a1 a2 … aN
+r0 r1 r2 … rK
+K tSL tEG
+```
+The program should be invoked as follows: `./ajustePol < pontos.in > resultado.out`
+
