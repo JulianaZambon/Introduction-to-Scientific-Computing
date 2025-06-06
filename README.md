@@ -130,3 +130,28 @@ K tSL tEG
 ```
 The program should be invoked as follows: `./ajustePol < pontos.in > resultado.out`
 
+### Performance Improvement and Analysis
+
+**Objective:** Optimize the original `ajustePol` program (v1) to create a more performant version (v2) without altering its numerical results. Explain all code changes in the `LEIAME` file.
+
+**Performance Analysis:** Compare v1 and v2 performance for:
+(A) System of Linear Equations (SL) generation using the Least Squares Method.
+(B) SL solution using the Gaussian Elimination Method.
+
+**Conditions:** 
+- Compile both versions with GCC -O3 -mavx -march=native on the same machine.
+- Use LIKWID for instrumentation on core 3 (-C 3).
+- Provide processor architecture details (`LIKWID-topology -g -c`).
+- Utilize `long long int` for relevant variables in both versions to handle large K values.
+
+**Tests:** 
+- Generate test data using `./gera_entrada <Kpoints> <PolynomialDegree> | ./ajustePol (or with LIKWID)`.
+- N values: N1=10, N2=1000.
+- K values: 64, 128, 200, 256, 512, 600, 800, 1024, 2000, 3000, 4096, 6000, 7000, 10000, 50000, 10⁵. For N1, also include: 10⁶, 10⁷, 10⁸.
+- Graphs: Two sets of line graphs (one for A, one for B). Each graph should have four distinct lines (N1+v1, N1+v2, N2+v1, N2+v2). X-axis (K) and Y-axis (time for time test) must be logarithmic. Explain each graph.
+
+**Metrics to Monitor (using LIKWID):**
+- Time: Execution time (`timestamp()`).
+- L3 Cache Miss: "cache miss RATIO" from `L3CACHE` group.
+- Energy: "Energy [J]" from `ENERGY` group.
+- Arithmetic Operations: "FLOPS DP" and "FLOPS AVX DP" in MFLOP/s from `FLOPS_DP` group. Explain AVX DP results in the `LEIAME`.
