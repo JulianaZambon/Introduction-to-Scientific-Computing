@@ -8,13 +8,22 @@
 **Departamento:** Departamento de Informática  
 **Universidade:** Universidade Federal do Paraná (UFPR)
 
+## Introdução 
+
+Este trabalho, referente ao EP 03 da disciplina de Introdução à Computação Científica (CI1164), tem como objetivo principal otimizar o desempenho do programa `ajustePol`. Este programa realiza o ajuste de uma curva polinomial de grau N a partir de K pontos, utilizando o Método dos Mínimos Quadrados para a geração do Sistema Linear (SL) e o Método da Eliminação de Gauss com pivoteamento parcial para sua solução.
+
+O EP03 consistiu em duas etapas principais: a implementação de otimizações no código original `ajustePol_v1.c` para criar uma versão aprimorada `ajustePol_v2.c`, e uma análise comparativa do desempenho de ambas as versões, utilizando a ferramenta LIKWID para coletar métricas de tempo, cache, energia e operações aritméticas.
+
 ---
 
 ## Melhoria de Desempenho
 
 Para obter a versão otimizada `ajustePol_v2.c` a partir do código original `ajustePol_v1.c`, foram implementadas as seguintes alterações:
 
-1. 
+1.  Alteração:
+    Justificativa:
+
+2. 
 
 ## Análise de Desempenho
 
@@ -144,7 +153,7 @@ Valores adicionais de K (apenas para N1​=10):
     10⁶,10⁷,10⁸
 
 
-A geração dos dados de entrada para cada teste foi realizada utilizando o programa auxiliar `gera_entrada`, em pipeline com o `ajustePol` e o likwid-perfctr, conforme o exemplo:
+A geração dos dados de entrada para cada teste foi realizada utilizando o programa auxiliar `gera_entrada`, em pipeline com o `ajustePol` e o likwid-perfctr, conforme os exemplos:
 
 ```c
     ./gera_entrada <Kpontos> <GrauPol>  |  ./ajustePol    (sem LIKWID)
@@ -155,17 +164,29 @@ A geração dos dados de entrada para cada teste foi realizada utilizando o prog
 
 Os resultados são apresentados em conjuntos de gráficos de linha, onde o eixo das abscissas (K) e, para tempos, o eixo das ordenadas (tempo), estão em escala logarítmica. Cada gráfico contém quatro linhas, representando as combinações: N1​+v1, N1​+v2, N2​+v1 e N2​+v2.
 
+Foi comparado o desempenho das duas versões em relação a: (A) geração do SL pelo Método dos Mínimos Quadrados e (B) solução do SL pelo Método da Eliminação de Gauss.
+
 ### Gráficos de Tempo de Execução
 Esses gráficos mostram o tempo gasto para cada etapa do programa.
+
+- Gráfico 01
+[Inserir gráfico aqui]
+
+Explicação Gráfico 01: [Inserir explicação aqui]
 
 ### Gráficos de Cache Miss L3
 Esses gráficos mostram a taxa de cache misses na cache L3.
 
+- Gráfico
+
 ### Gráficos de Energia
 Esses gráficos mostram o consumo de energia durante a execução.
+
+- Gráfico 
 
 ### Gráficos de Operações Aritméticas
 Esses gráficos mostram o desempenho em operações de ponto flutuante, utilizando o grupo FLOPS_DP do LIKWID e reportar FLOPS DP e FLOPS AVX DP, em MFLOP/s.
 
+- Gráfico
 
 ## Conclusão
