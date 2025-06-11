@@ -4,7 +4,7 @@
 
 # Compilador
     CC     = gcc
-    CFLAGS = 
+    CFLAGS = -O3 -mavx -march=native
     LFLAGS = -lm
 
 # Lista de arquivos para distribuição.

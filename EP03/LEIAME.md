@@ -34,7 +34,7 @@ A análise de desempenho foi realizada comparando as duas versões do programa `
 - Máquina (arquitetura do processador):
 
 ```c
-juzambon@iris:~$ likwid-topology -g -c
+~$ likwid-topology -g -c
 --------------------------------------------------------------------------------
 CPU name:	Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz
 CPU type:	Intel Kabylake processor
