@@ -1,5 +1,5 @@
 # PROGRAMA
-    PROGS = ajustePol_v1 gera_entrada
+    PROGS = ajustePol_v1 ajustePol_v2 gera_entrada
     OBJS = utils.o
 
 # Compilador
