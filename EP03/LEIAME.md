@@ -128,7 +128,7 @@ Socket 0:
 
 - Compilador: GCC
 
-- OPções de Compilação: `-O3 -mavx -march=native`
+- Opções de Compilação: `-O3 -mavx -march=native`
 
 - Core Utilizada (LIKWID): Core 3 
 
