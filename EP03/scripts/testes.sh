@@ -11,7 +11,7 @@ CORE=3 # Core a ser usada para o LIKWID
 
 # Diretórios de saída
 DATA_DIR="../data"
-mkdir -p $DATA_DIR
+mkdir -p "$DATA_DIR" 
 
 echo "Iniciando os testes..."
 
@@ -33,6 +33,7 @@ for N in "${NS[@]}"; do
 
             # 1. Coleta os tempos tSL e tEG do programa diretamente
             # A saída será redirecionada para um arquivo para ser parseada depois
+            # O 2>&1 redireciona stderr para stdout, garantindo que erros também sejam capturados
             ./gera_entrada "$K" "$N" | "$PROGRAM" > "${OUTPUT_PREFIX}_times.txt" 2>&1
 
             # 2. Coleta as métricas do LIKWID

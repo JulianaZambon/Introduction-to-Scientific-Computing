@@ -193,12 +193,12 @@ Esses gráficos mostram o tempo gasto para cada etapa do programa.
 Explicação Gráfico 01: [Inserir explicação aqui]
 
 ### Gráficos de Cache Miss L3
-Esses gráficos mostram a taxa de cache misses na cache L3.
+Esses gráficos mostram a taxa de cache misses na cache L3 com o resultado de "cache miss RATIO".
 
 - Gráfico
 
 ### Gráficos de Energia
-Esses gráficos mostram o consumo de energia durante a execução.
+Esses gráficos mostram o consumo de energia durante a execução, utilizando o grupo ENERGY do LIKWID com o resultado de "Energy [J]".
 
 - Gráfico 
 
@@ -206,5 +206,8 @@ Esses gráficos mostram o consumo de energia durante a execução.
 Esses gráficos mostram o desempenho em operações de ponto flutuante, utilizando o grupo FLOPS_DP do LIKWID e reportar FLOPS DP e FLOPS AVX DP, em MFLOP/s.
 
 - Gráfico
+
+### Resultados de AVX Flops
+Escrever aqui.
 
 ## Conclusão
