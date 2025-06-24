@@ -207,7 +207,7 @@ Esses gráficos mostram o desempenho em operações de ponto flutuante, utilizan
 
 - Gráfico
 
-### Resultados de AVX Flops
+#### Resultados de AVX Flops
 Escrever aqui.
 
 ## Conclusão
