@@ -10,6 +10,7 @@
 #include <fenv.h>
 #include <math.h>
 #include <stdint.h>
+#include <likwid.h>
 
 #include "utils.h"
 

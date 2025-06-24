@@ -4,8 +4,13 @@
 
 # Compilador
     CC     = gcc
-    CFLAGS = -O3 -mavx -march=native
-    LFLAGS = -lm
+
+# Detecta automaticamente o diretório base do LIKWID
+LIKWID_HOME := $(dir $(shell which likwid-perfctr))../
+
+# Flags de compilação e linkagem
+CFLAGS = -O3 -mavx -march=native -DLIKWID_PERFMON -I$(LIKWID_HOME)/include
+LFLAGS = -lm -L$(LIKWID_HOME)/lib -llikwid
 
 # Lista de arquivos para distribuição.
 # LEMBRE-SE DE ACRESCENTAR OS ARQUIVOS ADICIONAIS SOLICITADOS NO ENUNCIADO DO TRABALHO

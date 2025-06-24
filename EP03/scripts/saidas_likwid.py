@@ -3,7 +3,7 @@ import re
 import pandas as pd
 
 # Diretórios
-DATA_DIR = '../data'
+DATA_DIR = './data'
 RESULTS_DIR = '../results'
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
