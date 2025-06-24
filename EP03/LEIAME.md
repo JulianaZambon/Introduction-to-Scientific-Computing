@@ -19,16 +19,27 @@ O EP03 consistiu em duas etapas principais: a implementação de otimizações n
 ## Estrutura de diretórios
 
 ├── ajustePol_v1.c
+
 ├── ajustePol_v2.c
+
 ├── data
+
 ├── gera_entrada.c
+
 ├── LEIAME.md
+
 ├── Makefile
+
 ├── scripts
+
 │   ├── graficos.py
+
 │   ├── saidas_likwid.py
+
 │   └── testes.sh
+
 ├── utils.c
+
 └── utils.h
 
 ## Melhoria de Desempenho
