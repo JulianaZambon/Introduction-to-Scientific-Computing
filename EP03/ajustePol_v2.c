@@ -156,6 +156,9 @@ double P(double x_val, int N, double *alpha)
 
 int main()
 {
+  // Configuração do ambiente LIKWID para monitoramento de desempenho
+  LIKWID_MARKER_INIT;
+
   int N, n;
   long long int K, p;
 
@@ -187,18 +190,22 @@ int main()
   double *b = (double *)malloc(sizeof(double) * n);
   double *alpha = (double *)malloc(sizeof(double) * n);
 
-  // (A) Geração do Sistema Linear (SL)
+  // (A) Gera SL
+  LIKWID_MARKER_START("v2_montaSL");
   double tSL = timestamp();
   montaSL(A, b, n, p, x, y);
   tSL = timestamp() - tSL;
+  LIKWID_MARKER_STOP("v2_montaSL");
 
-  // (B) Resolução do Sistema Linear
+   // (B) Resolve SL
+  LIKWID_MARKER_START("v2_eliminacaoGauss");
   double tEG = timestamp();
   eliminacaoGauss(A, b, n);
   retrossubs(A, b, alpha, n);
   tEG = timestamp() - tEG;
+  LIKWID_MARKER_STOP("v2_eliminacaoGauss");
 
-  // Imprime os coeficientes do polinômio ajustado
+  // Imprime coeficientes
   for (int i = 0; i < n; ++i)
   {
     printf("%1.15e ", alpha[i]);
@@ -212,7 +219,7 @@ int main()
   }
   puts("");
 
-  // Imprime os tempos de execução
+  // Imprime os tempos 
   printf("%lld %1.10e %1.10e\n", K, tSL, tEG);
 
   // Liberação de toda a memória alocada
@@ -223,5 +230,7 @@ int main()
   free(b);
   free(alpha);
 
+  // Finaliza o ambiente LIKWID
+  LIKWID_MARKER_CLOSE;
   return 0;
 }

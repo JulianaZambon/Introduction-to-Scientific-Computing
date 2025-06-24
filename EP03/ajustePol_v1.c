@@ -79,6 +79,8 @@ double P(double x, int N, double *alpha) {
 }
 
 int main() {
+  // Configuração do LIKWID para medir o desempenho
+  LIKWID_MARKER_INIT;
 
   int N, n;
   long long int K, p;
@@ -102,15 +104,19 @@ int main() {
   double *alpha = (double *) malloc(sizeof(double)*n); // coeficientes ajuste
 
   // (A) Gera SL
+  LIKWID_MARKER_START("v1_montaSL");
   double tSL = timestamp();
   montaSL(A, b, n, p, x, y);
   tSL = timestamp() - tSL;
+  LIKWID_MARKER_STOP("v1_montaSL");
 
   // (B) Resolve SL
+  LIKWID_MARKER_START("v1_eliminacaoGauss");
   double tEG = timestamp();
   eliminacaoGauss(A, b, n); 
   retrossubs(A, b, alpha, n); 
   tEG = timestamp() - tEG;
+  LIKWID_MARKER_STOP("v1_eliminacaoGauss");
 
   // Imprime coeficientes
   for (int i = 0; i < n; ++i)
@@ -125,5 +131,7 @@ int main() {
   // Imprime os tempos
   printf("%lld %1.10e %1.10e\n", K, tSL, tEG);
 
+  // Finaliza o ambiente LIKWID
+  LIKWID_MARKER_CLOSE;
   return 0;
 }
