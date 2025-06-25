@@ -51,7 +51,7 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
   }
 
   // Preenche a matriz A e o vetor b usando as potências pré-calculadas.
-  for (int i = 0; i < n; ++i)
+  for (long long int i = 0; i < n; ++i)
   {
     for (int j = 0; j < n; ++j)
     {
@@ -83,10 +83,10 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
 
 void eliminacaoGauss(double **A, double *b, int n)
 {
-  for (int i = 0; i < n; ++i)
+  for (long long int i = 0; i < n; ++i)
   {
     // Encontra o pivô máximo na coluna atual
-    int iMax = i;
+    long long int iMax = i;
     for (int k = i + 1; k < n; ++k)
     {
       if (fabs(A[k][i]) > fabs(A[iMax][i]))
@@ -110,14 +110,14 @@ void eliminacaoGauss(double **A, double *b, int n)
     }
 
     // Eliminação
-    for (int k = i + 1; k < n; ++k)
+    for (long long int k = i + 1; k < n; ++k)
     {
       double m = A[k][i] / A[i][i]; // Multiplicador
       A[k][i] = 0.0;                // Este elemento se tornará zero após a operação
 
       // Loop para subtrair a linha pivô das linhas abaixo
       // O acesso sequencial a A[k][j] e A[i][j] é otimizado pelo cache.
-      for (int j = i + 1; j < n; ++j)
+      for (long long int j = i + 1; j < n; ++j)
       {
         A[k][j] -= A[i][j] * m;
       }
