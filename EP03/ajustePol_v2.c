@@ -28,11 +28,13 @@
   // O expoente máximo é (n-1) + (n-1) = 2n - 2.
   // A alocação aqui é por linha para facilitar o acesso, mas os dados dentro de cada linha
   // de x_powers[k] são contíguos.
+
+  // Fazer loop unrolling
 void montaSL(double **A, double *b, int n, long long int p, double *x, double *y)
 {
   double **x_powers = (double **)malloc(sizeof(double *) * p);
 
-  int max_power = 2 * n - 1; // Potências de x[k]^0 até x[k]^(2n-2)
+  long long int max_power = 2 * n - 1; // Potências de x[k]^0 até x[k]^(2n-2)
 
   for (long long int k = 0; k < p; ++k)
   {
@@ -43,7 +45,7 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
     if (max_power > 1)
     {
       x_powers[k][1] = x[k]; // x[k]^1
-      for (int pow_idx = 2; pow_idx < max_power; ++pow_idx)
+      for (long long int pow_idx = 2; pow_idx < max_power; ++pow_idx)
       {
         x_powers[k][pow_idx] = x_powers[k][pow_idx - 1] * x[k];
       }
@@ -53,7 +55,7 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
   // Preenche a matriz A e o vetor b usando as potências pré-calculadas.
   for (long long int i = 0; i < n; ++i)
   {
-    for (int j = 0; j < n; ++j)
+    for (long long int j = 0; j < n; ++j)
     {
       A[i][j] = 0.0;
       for (long long int k = 0; k < p; ++k)
@@ -63,7 +65,7 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
     }
   }
 
-  for (int i = 0; i < n; ++i)
+  for (long long int i = 0; i < n; ++i)
   {
     b[i] = 0.0;
     for (long long int k = 0; k < p; ++k)
@@ -85,25 +87,25 @@ void eliminacaoGauss(double **A, double *b, int n)
 {
   for (long long int i = 0; i < n; ++i)
   {
-    // Encontra o pivô máximo na coluna atual
+    // Encontra o pivô máximo na coluna atual.
     long long int iMax = i;
     for (int k = i + 1; k < n; ++k)
     {
       if (fabs(A[k][i]) > fabs(A[iMax][i]))
-      { // Usar fabs para pivoteamento parcial
+      { // Usar fabs para pivoteamento parcial.
         iMax = k;
       }
     }
 
-    // Troca as linhas se o pivô máximo não estiver na posição atual
+    // Troca as linhas se o pivô máximo não estiver na posição atual.
     if (iMax != i)
     {
-      // Troca de ponteiros para as linhas da matriz A (mais eficiente que copiar elementos)
+      // Troca de ponteiros para as linhas da matriz A (mais eficiente que copiar elementos).
       double *tmp_A = A[i];
       A[i] = A[iMax];
       A[iMax] = tmp_A;
 
-      // Troca os elementos correspondentes no vetor b
+      // Troca os elementos correspondentes no vetor b.
       double aux_b = b[i];
       b[i] = b[iMax];
       b[iMax] = aux_b;
@@ -112,10 +114,10 @@ void eliminacaoGauss(double **A, double *b, int n)
     // Eliminação
     for (long long int k = i + 1; k < n; ++k)
     {
-      double m = A[k][i] / A[i][i]; // Multiplicador
-      A[k][i] = 0.0;                // Este elemento se tornará zero após a operação
+      double m = A[k][i] / A[i][i]; // Multiplicador.
+      A[k][i] = 0.0;                // Este elemento se tornará zero após a operação.
 
-      // Loop para subtrair a linha pivô das linhas abaixo
+      // Loop para subtrair a linha pivô das linhas abaixo.
       // O acesso sequencial a A[k][j] e A[i][j] é otimizado pelo cache.
       for (long long int j = i + 1; j < n; ++j)
       {
@@ -156,7 +158,7 @@ double P(double x_val, int N, double *alpha)
   double Px = alpha[0];
   double x_power = 1.0; // x^0
 
-  for (int i = 1; i <= N; ++i)
+  for (long long int i = 1; i <= N; ++i)
   {
     x_power *= x_val; // Calcula x^i a partir de x^(i-1)
     Px += alpha[i] * x_power;
