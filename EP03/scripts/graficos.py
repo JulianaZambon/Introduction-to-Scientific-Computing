@@ -1,3 +1,7 @@
+# Nome: Juliana Zambon
+# GRR: 20224168
+# Login DINF: jz22
+
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -5,16 +9,15 @@ import numpy as np
 import os
 
 # Diretório dos resultados (onde estão os CSVs)
-RESULTS_DIR = '../results'
+RESULTS_DIR = './results'
 PLOTS_DIR = os.path.join(RESULTS_DIR, 'plots')
 os.makedirs(PLOTS_DIR, exist_ok=True)
 
-# Cores para as linhas (fixas para consistência)
 COLORS = {
-    'N10_v1': 'blue',
-    'N10_v2': 'cyan',
-    'N1000_v1': 'red',
-    'N1000_v2': 'orange'
+    'N10_v1': 'skyblue',        # Um azul claro e amigável
+    'N10_v2': 'dodgerblue',     # Um azul mais forte e vibrante (versão otimizada)
+    'N1000_v1': 'lightcoral',   # Um vermelho mais suave
+    'N1000_v2': 'darkred'       # Um vermelho escuro e intenso (versão otimizada)
 }
 
 # Informações dos gráficos (para automatizar a criação)

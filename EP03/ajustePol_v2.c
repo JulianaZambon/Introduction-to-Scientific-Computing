@@ -12,20 +12,24 @@
 #include <stdint.h>
 #include <likwid.h>
 
-#include "utils.h" // Assumindo que este arquivo contém a função timestamp()
+#include "utils.h"
 
-// ---
-// ## Ajuste de Curvas
-// ---
+#define N 4           // Definição para Loop Unrolling
 
-void montaSL(double **A, double *b, int n, long long int p, double *x, double *y)
-{
+
+/////////////////////////////////////////////////////////////////////////////////////
+//   AJUSTE DE CURVAS
+/////////////////////////////////////////////////////////////////////////////////////
+
+
   // Pré-calcula potências de x[k]
   // Isso evita múltiplas chamadas a pow() dentro dos loops, que é uma operação custosa.
   // Para cada x[k], armazenamos suas potências de 0 até 2*(n-1).
   // O expoente máximo é (n-1) + (n-1) = 2n - 2.
   // A alocação aqui é por linha para facilitar o acesso, mas os dados dentro de cada linha
   // de x_powers[k] são contíguos.
+void montaSL(double **A, double *b, int n, long long int p, double *x, double *y)
+{
   double **x_powers = (double **)malloc(sizeof(double *) * p);
 
   int max_power = 2 * n - 1; // Potências de x[k]^0 até x[k]^(2n-2)
@@ -46,7 +50,7 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
     }
   }
 
-  // Preenche a matriz A e o vetor b usando as potências pré-calculadas
+  // Preenche a matriz A e o vetor b usando as potências pré-calculadas.
   for (int i = 0; i < n; ++i)
   {
     for (int j = 0; j < n; ++j)
@@ -68,13 +72,14 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
     }
   }
 
-  // Libera a memória das potências pré-calculadas
+  // Libera a memória das potências pré-calculadas.
   for (long long int k = 0; k < p; ++k)
   {
     free(x_powers[k]);
   }
   free(x_powers);
 }
+
 
 void eliminacaoGauss(double **A, double *b, int n)
 {
@@ -121,22 +126,31 @@ void eliminacaoGauss(double **A, double *b, int n)
   }
 }
 
+
+  // Loop para subtrair os termos já conhecidos.
+  // O acesso sequencial a A[i][j] e x[j] é otimizado pelo cache.
 void retrossubs(double **A, double *b, double *x, int n)
 {
-  for (int i = n - 1; i >= 0; --i)
+  for (long long int i = n - 1; i >= 0; --i)
   {
     x[i] = b[i];
-    // Loop para subtrair os termos já conhecidos
-    // O acesso sequencial a A[i][j] e x[j] é otimizado pelo cache.
-    for (int j = i + 1; j < n; ++j)
+    long long int j = i + 1;
+    for (; j < n - n % N; j += N)
     {
+      // Loop Unrolling.
       x[i] -= A[i][j] * x[j];
+      x[i] -= A[i][j + 1] * x[j + 1];
+      x[i] -= A[i][j + 2] * x[j + 2];
+      x[i] -= A[i][j + 3] * x[j + 3];
     }
+    for (; j < n; j++)
+      x[i] -= A[i][j] * x[j];
+
     x[i] /= A[i][i];
   }
 }
 
-// Otimização para P: calcula potências de x de forma iterativa, evitando chamadas repetidas a pow().
+  // Otimização para P: calcula potências de x de forma iterativa, evitando chamadas repetidas a pow().
 double P(double x_val, int N, double *alpha)
 {
   double Px = alpha[0];
@@ -150,9 +164,6 @@ double P(double x_val, int N, double *alpha)
   return Px;
 }
 
-// ---
-// ## Função Principal
-// ---
 
 int main()
 {
@@ -174,7 +185,7 @@ int main()
     scanf("%lf %lf", x + i, y + i);
 
   // Alocação da matriz A de forma contígua em memória.
-  // Isso é crucial para o desempenho do cache, especialmente para N=1000.
+  // Isso é importante para o desempenho do cache, especialmente para N=1000.
   double **A = (double **)malloc(sizeof(double *) * n);
 
   // Aloca um único bloco grande de memória para todos os elementos da matriz
@@ -182,9 +193,7 @@ int main()
 
   // Faz com que cada A[i] aponte para o início da linha i no bloco contíguo
   for (int i = 0; i < n; ++i)
-  {
     A[i] = &(A_data[i * n]);
-  }
 
   // Alocação de memória para os vetores b e alpha (coeficientes do ajuste)
   double *b = (double *)malloc(sizeof(double) * n);
@@ -197,7 +206,7 @@ int main()
   tSL = timestamp() - tSL;
   LIKWID_MARKER_STOP("v2_montaSL");
 
-   // (B) Resolve SL
+  // (B) Resolve SL
   LIKWID_MARKER_START("v2_eliminacaoGauss");
   double tEG = timestamp();
   eliminacaoGauss(A, b, n);
@@ -207,19 +216,15 @@ int main()
 
   // Imprime coeficientes
   for (int i = 0; i < n; ++i)
-  {
     printf("%1.15e ", alpha[i]);
-  }
   puts("");
 
   // Imprime os resíduos (diferença absoluta entre y_real e P(x_real))
   for (long long int i = 0; i < p; ++i)
-  {
     printf("%1.15e ", fabs(y[i] - P(x[i], N, alpha)));
-  }
   puts("");
 
-  // Imprime os tempos 
+  // Imprime os tempos
   printf("%lld %1.10e %1.10e\n", K, tSL, tEG);
 
   // Liberação de toda a memória alocada

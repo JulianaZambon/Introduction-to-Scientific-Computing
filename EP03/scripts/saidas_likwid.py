@@ -1,3 +1,7 @@
+# Nome: Juliana Zambon
+# GRR: 20224168
+# Login DINF: jz22
+
 import os
 import re
 import pandas as pd
@@ -8,7 +12,6 @@ RESULTS_DIR = '../results'
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 # Métricas a extrair (regex para encontrar o valor)
-# Adapte as regex se o formato de saída do LIKWID for ligeiramente diferente
 METRIC_PATTERNS = {
     'L3CACHE': {
         'cache miss RATIO': r'|Cache miss RATIO\s*\|\s*(\d+\.\d+e[+-]?\d+)'
@@ -47,7 +50,7 @@ for filename in data_files:
     N = int(match.group(1))
     K = int(match.group(2))
     version = match.group(3)
-    file_type = match.group(4) # 'times' ou o nome da métrica LIKWID
+    file_type = match.group(4) 
 
     filepath = os.path.join(DATA_DIR, filename)
     content = open(filepath, 'r').read()
@@ -67,7 +70,7 @@ for filename in data_files:
 
     # Extrair métricas LIKWID
     else: # filename should be a METRIC
-        metric_group_name = file_type # Ex: 'L3CACHE', 'ENERGY', 'FLOPS_DP'
+        metric_group_name = file_type 
         if metric_group_name in METRIC_PATTERNS:
             for metric_name, pattern in METRIC_PATTERNS[metric_group_name].items():
                 metric_match = re.search(pattern, content)
