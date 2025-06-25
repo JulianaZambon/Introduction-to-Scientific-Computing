@@ -14,32 +14,30 @@
 
 #include "utils.h"
 
-#define UNROLL_FATOR  4   // Definição para Loop Unrolling
-
+#define UNROLL_FATOR 4 // Definição para Loop Unrolling
 
 /////////////////////////////////////////////////////////////////////////////////////
 //   AJUSTE DE CURVAS
 /////////////////////////////////////////////////////////////////////////////////////
 
-
-  // Pré-calcula potências de x[k]
-  // Isso evita múltiplas chamadas a pow() dentro dos loops, que é uma operação custosa.
-  // Para cada x[k], armazenamos suas potências de 0 até 2*(n-1).
-  // O expoente máximo é (n-1) + (n-1) = 2n - 2.
-  // A alocação aqui é por linha para facilitar o acesso, mas os dados dentro de cada linha
-  // de x_powers[k] são contíguos.
+// Pré-calcula potências de x[k]
+// Isso evita múltiplas chamadas a pow() dentro dos loops, que é uma operação custosa.
+// Para cada x[k], armazenamos suas potências de 0 até 2*(n-1).
+// O expoente máximo é (n-1) + (n-1) = 2n - 2.
+// A alocação aqui é por linha para facilitar o acesso, mas os dados dentro de cada linha
+// de x_powers[k] são contíguos.
 void montaSL(double **A, double *b, int n, long long int p, double *x, double *y)
 {
   // OTIMIZAÇÃO: Aloca x_powers como um único bloco de memória contíguo.
   // Isso melhora ainda mais a localidade de cache para x_powers.
   long long int max_power = 2 * n - 1; // Potências de x[k]^0 até x[k]^(2n-2)
-  double *x_powers_data = (double *)malloc(sizeof(double) * p * max_power);
-  double **x_powers = (double **)malloc(sizeof(double *) * p);
+  double *x_powers_data = (double *)calloc(p * max_power, sizeof(double));
+  double **x_powers = (double **)calloc(p, sizeof(double *));
 
   for (long long int k = 0; k < p; ++k)
   {
     x_powers[k] = &(x_powers_data[k * max_power]); // Faz o ponteiro apontar para o início da "linha"
-    x_powers[k][0] = 1.0; // x[k]^0
+    x_powers[k][0] = 1.0;                          // x[k]^0
 
     if (max_power > 1)
     {
@@ -47,7 +45,7 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
       // Loop para pré-calculo de potências com UNROLLING
       long long int pow_idx;
       // Começa do índice 2, já que 0 e 1 são pré-calculados
-      for (pow_idx = 2; pow_idx + 3 < max_power; pow_idx += UNROLL_FATOR) // Unroll fator 4
+      for (pow_idx = 2; pow_idx + 3 < max_power; pow_idx += UNROLL_FATOR) 
       {
         x_powers[k][pow_idx] = x_powers[k][pow_idx - 1] * x[k];
         x_powers[k][pow_idx + 1] = x_powers[k][pow_idx] * x[k];
@@ -82,11 +80,9 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
     }
   }
 
-  // Libera a memória das potências pré-calculadas.
   free(x_powers_data);
-  free(x_powers);      
+  free(x_powers);
 }
-
 
 void eliminacaoGauss(double **A, double *b, int n)
 {
@@ -133,9 +129,8 @@ void eliminacaoGauss(double **A, double *b, int n)
   }
 }
 
-
-  // Loop para subtrair os termos já conhecidos.
-  // O acesso sequencial a A[i][j] e x[j] é otimizado pelo cache.
+// Loop para subtrair os termos já conhecidos.
+// O acesso sequencial a A[i][j] e x[j] é otimizado pelo cache.
 void retrossubs(double **A, double *b, double *x, int n)
 {
   for (long long int i = n - 1; i >= 0; --i)
@@ -157,7 +152,7 @@ void retrossubs(double **A, double *b, double *x, int n)
   }
 }
 
-  // Otimização para P: calcula potências de x de forma iterativa, evitando chamadas repetidas a pow().
+// Otimização para P: calcula potências de x de forma iterativa, evitando chamadas repetidas a pow().
 double P(double x_val, int N, double *alpha)
 {
   double Px = alpha[0];
@@ -171,7 +166,6 @@ double P(double x_val, int N, double *alpha)
   return Px;
 }
 
-
 int main()
 {
   // Configuração do ambiente LIKWID para monitoramento de desempenho
@@ -184,8 +178,8 @@ int main()
   p = K;     // quantidade de pontos
   n = N + 1; // tamanho do SL (grau N + 1)
 
-  double *x = (double *)malloc(sizeof(double) * p);
-  double *y = (double *)malloc(sizeof(double) * p);
+  double *x = (double *)calloc(p, sizeof(double));
+  double *y = (double *)calloc(p, sizeof(double));
 
   // ler numeros
   for (long long int i = 0; i < p; ++i)
@@ -203,8 +197,8 @@ int main()
     A[i] = &(A_data[i * n]);
 
   // Alocação de memória para os vetores b e alpha (coeficientes do ajuste)
-  double *b = (double *)malloc(sizeof(double) * n);
-  double *alpha = (double *)malloc(sizeof(double) * n);
+  double *b = (double *)calloc(n, sizeof(double));
+  double *alpha = (double *)calloc(n, sizeof(double));
 
   // (A) Gera SL
   LIKWID_MARKER_START("v2_montaSL");
