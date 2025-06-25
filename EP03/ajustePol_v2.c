@@ -14,7 +14,7 @@
 
 #include "utils.h"
 
-#define N 4           // Definição para Loop Unrolling
+#define UNROLL_FATOR  4           // Definição para Loop Unrolling
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -32,27 +32,37 @@
   // Fazer loop unrolling
 void montaSL(double **A, double *b, int n, long long int p, double *x, double *y)
 {
-  double **x_powers = (double **)malloc(sizeof(double *) * p);
-
+  // OTIMIZAÇÃO: Aloca x_powers como um único bloco de memória contíguo.
+  // Isso melhora ainda mais a localidade de cache para x_powers.
   long long int max_power = 2 * n - 1; // Potências de x[k]^0 até x[k]^(2n-2)
+  double *x_powers_data = (double *)malloc(sizeof(double) * p * max_power);
+  double **x_powers = (double **)malloc(sizeof(double *) * p);
 
   for (long long int k = 0; k < p; ++k)
   {
-    x_powers[k] = (double *)malloc(sizeof(double) * max_power);
-
+    x_powers[k] = &(x_powers_data[k * max_power]); // Faz o ponteiro apontar para o início da "linha"
     x_powers[k][0] = 1.0; // x[k]^0
 
     if (max_power > 1)
     {
       x_powers[k][1] = x[k]; // x[k]^1
-      for (long long int pow_idx = 2; pow_idx < max_power; ++pow_idx)
+      // Loop para pré-calculo de potências com UNROLLING
+      long long int pow_idx;
+      // Começa do índice 2, já que 0 e 1 são pré-calculados
+      for (pow_idx = 2; pow_idx + 3 < max_power; pow_idx += UNROLL_FATOR) // Unroll fator  4
+      {
+        x_powers[k][pow_idx]     = x_powers[k][pow_idx - 1] * x[k];
+        x_powers[k][pow_idx + 1] = x_powers[k][pow_idx]     * x[k];
+        x_powers[k][pow_idx + 2] = x_powers[k][pow_idx + 1] * x[k];
+        x_powers[k][pow_idx + 3] = x_powers[k][pow_idx + 2] * x[k];
+      }
+      for (; pow_idx < max_power; ++pow_idx)
       {
         x_powers[k][pow_idx] = x_powers[k][pow_idx - 1] * x[k];
       }
     }
   }
 
-  // Preenche a matriz A e o vetor b usando as potências pré-calculadas.
   for (long long int i = 0; i < n; ++i)
   {
     for (long long int j = 0; j < n; ++j)
@@ -75,11 +85,8 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
   }
 
   // Libera a memória das potências pré-calculadas.
-  for (long long int k = 0; k < p; ++k)
-  {
-    free(x_powers[k]);
-  }
-  free(x_powers);
+  free(x_powers_data);
+  free(x_powers);      
 }
 
 
@@ -137,7 +144,7 @@ void retrossubs(double **A, double *b, double *x, int n)
   {
     x[i] = b[i];
     long long int j = i + 1;
-    for (; j < n - n % N; j += N)
+    for (; j < n - n % N; j += UNROLL_FATOR)
     {
       // Loop Unrolling.
       x[i] -= A[i][j] * x[j];
