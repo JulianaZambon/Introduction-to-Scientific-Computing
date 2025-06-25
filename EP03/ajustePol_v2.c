@@ -14,7 +14,7 @@
 
 #include "utils.h"
 
-#define UNROLL_FATOR  4           // Definição para Loop Unrolling
+#define UNROLL_FATOR  4   // Definição para Loop Unrolling
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -28,8 +28,6 @@
   // O expoente máximo é (n-1) + (n-1) = 2n - 2.
   // A alocação aqui é por linha para facilitar o acesso, mas os dados dentro de cada linha
   // de x_powers[k] são contíguos.
-
-  // Fazer loop unrolling
 void montaSL(double **A, double *b, int n, long long int p, double *x, double *y)
 {
   // OTIMIZAÇÃO: Aloca x_powers como um único bloco de memória contíguo.
@@ -49,10 +47,10 @@ void montaSL(double **A, double *b, int n, long long int p, double *x, double *y
       // Loop para pré-calculo de potências com UNROLLING
       long long int pow_idx;
       // Começa do índice 2, já que 0 e 1 são pré-calculados
-      for (pow_idx = 2; pow_idx + 3 < max_power; pow_idx += UNROLL_FATOR) // Unroll fator  4
+      for (pow_idx = 2; pow_idx + 3 < max_power; pow_idx += UNROLL_FATOR) // Unroll fator 4
       {
-        x_powers[k][pow_idx]     = x_powers[k][pow_idx - 1] * x[k];
-        x_powers[k][pow_idx + 1] = x_powers[k][pow_idx]     * x[k];
+        x_powers[k][pow_idx] = x_powers[k][pow_idx - 1] * x[k];
+        x_powers[k][pow_idx + 1] = x_powers[k][pow_idx] * x[k];
         x_powers[k][pow_idx + 2] = x_powers[k][pow_idx + 1] * x[k];
         x_powers[k][pow_idx + 3] = x_powers[k][pow_idx + 2] * x[k];
       }
@@ -144,7 +142,7 @@ void retrossubs(double **A, double *b, double *x, int n)
   {
     x[i] = b[i];
     long long int j = i + 1;
-    for (; j < n - n % N; j += UNROLL_FATOR)
+    for (; j < n - n % UNROLL_FATOR; j += UNROLL_FATOR)
     {
       // Loop Unrolling.
       x[i] -= A[i][j] * x[j];
