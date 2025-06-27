@@ -16,4 +16,4 @@ if [ ! -d "graphics/b" ]; then
     mkdir graphics/b
 fi
 
-python3 create_graphics.py
+python3 ./scripts/cria_graficos.py
