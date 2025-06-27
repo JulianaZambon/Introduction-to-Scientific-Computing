@@ -30,7 +30,7 @@ echo "n,k,version,time1,time2" > "results/time.csv"
 
 n=10
 #                                                                              10⁶     10⁷      10⁸    
-K="64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000 1000000 10000000 100000000"
+K="100000000"
 for k in $K
 do
     # getting time (no need for likwid)
@@ -49,11 +49,11 @@ do
         echo $nome_arq
 
         # results for v1
-        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
-        tam=$(wc -l temp.txt | cut -d' ' -f1)
-        inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
-        pegar=$(($tam-$inicio))
-        tail -n$pegar temp.txt > results/v1/$nome_arq
+        # ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
+        # tam=$(wc -l temp.txt | cut -d' ' -f1)
+        # inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
+        # pegar=$(($tam-$inicio))
+        # tail -n$pegar temp.txt > results/v1/$nome_arq
 
         # results for v2
         ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
@@ -65,40 +65,40 @@ do
 done
 
 
-n=1000
-#                                                                       10⁵
-K="64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000"
-for k in $K
-do
-    # getting time (no need for likwid)
-    ./gera_entrada $k $n | ./ajustePol_v1 | tail -n1 > temp.txt
-    tempo_monta=$(cut -d' ' temp.txt -f2)
-    tempo_elimina=$(cut -d' ' temp.txt -f3)
-    echo $n","$k",1,"$tempo_monta","$tempo_elimina >> results/time.csv
-    ./gera_entrada $k $n | ./ajustePol_v2 | tail -n1 > temp.txt
-    tempo_monta=$(cut -d' ' temp.txt -f2)
-    tempo_elimina=$(cut -d' ' temp.txt -f3)
-    echo $n","$k",2,"$tempo_monta","$tempo_elimina >> results/time.csv
-    for metrica in $METRICAS
-    do
-        nome_arq=($metrica"_"$k"_"$n".csv")
-        echo $nome_arq
+# n=1000
+# #                                                                       10⁵
+# K="64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000"
+# for k in $K
+# do
+#     # getting time (no need for likwid)
+#     ./gera_entrada $k $n | ./ajustePol_v1 | tail -n1 > temp.txt
+#     tempo_monta=$(cut -d' ' temp.txt -f2)
+#     tempo_elimina=$(cut -d' ' temp.txt -f3)
+#     echo $n","$k",1,"$tempo_monta","$tempo_elimina >> results/time.csv
+#     ./gera_entrada $k $n | ./ajustePol_v2 | tail -n1 > temp.txt
+#     tempo_monta=$(cut -d' ' temp.txt -f2)
+#     tempo_elimina=$(cut -d' ' temp.txt -f3)
+#     echo $n","$k",2,"$tempo_monta","$tempo_elimina >> results/time.csv
+#     for metrica in $METRICAS
+#     do
+#         nome_arq=($metrica"_"$k"_"$n".csv")
+#         echo $nome_arq
 
-        # results for v1
-        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
-        tam=$(wc -l temp.txt | cut -d' ' -f1)
-        inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
-        pegar=$(($tam-$inicio))
-        tail -n$pegar temp.txt > results/v1/$nome_arq
+#         # results for v1
+#         ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
+#         tam=$(wc -l temp.txt | cut -d' ' -f1)
+#         inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
+#         pegar=$(($tam-$inicio))
+#         tail -n$pegar temp.txt > results/v1/$nome_arq
 
-        # results for v2
-        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
-        tam=$(wc -l temp.txt | cut -d' ' -f1)
-        inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
-        pegar=$(($tam-$inicio))
-        tail -n$pegar temp.txt > results/v2/$nome_arq
-    done
-done
+#         # results for v2
+#         ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
+#         tam=$(wc -l temp.txt | cut -d' ' -f1)
+#         inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
+#         pegar=$(($tam-$inicio))
+#         tail -n$pegar temp.txt > results/v2/$nome_arq
+#     done
+# done
 
 rm temp.txt
 make purge

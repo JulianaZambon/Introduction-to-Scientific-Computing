@@ -37,6 +37,8 @@ def get_info(group, metric):
     }
 
     for file in os.listdir(path_v1):
+        if file[0] == ".":
+            continue
         if "FLOPS" in file:
             g1, g2, k, n = file.split("_")
             g = g1+"_"+g2
@@ -51,6 +53,8 @@ def get_info(group, metric):
         data["b"][("v1", n)][int(k)] = value_b
 
     for file in os.listdir(path_v2):
+        if file[0] == ".":
+            continue
         if "FLOPS" in file:
             g1, g2, k, n = file.split("_")
             g = g1+"_"+g2
@@ -60,6 +64,7 @@ def get_info(group, metric):
         if (g != group):
             continue
         full_path = "results/v2/"+file
+        print(full_path, metric)
         value_a, value_b = get_file_info(full_path, metric)
         data["a"][("v2", n)][int(k)] = value_a
         data["b"][("v2", n)][int(k)] = value_b
