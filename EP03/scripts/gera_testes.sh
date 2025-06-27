@@ -34,11 +34,11 @@ K="64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000 1
 for k in $K
 do
     # getting time (no need for likwid)
-    ./gera $k $n | ./ajustePol_v1 | tail -n1 > temp.txt
+    ./gera_entrada $k $n | ./ajustePol_v1 | tail -n1 > temp.txt
     tempo_monta=$(cut -d' ' temp.txt -f2)
     tempo_elimina=$(cut -d' ' temp.txt -f3)
     echo $n","$k",1,"$tempo_monta","$tempo_elimina >> results/time.csv
-    ./gera $k $n | ./ajustePol_v2 | tail -n1 > temp.txt
+    ./gera_entrada $k $n | ./ajustePol_v2 | tail -n1 > temp.txt
     tempo_monta=$(cut -d' ' temp.txt -f2)
     tempo_elimina=$(cut -d' ' temp.txt -f3)
     echo $n","$k",2,"$tempo_monta","$tempo_elimina >> results/time.csv
@@ -49,14 +49,14 @@ do
         echo $nome_arq
 
         # results for v1
-        ./gera $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
+        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
         tam=$(wc -l temp.txt | cut -d' ' -f1)
         inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
         pegar=$(($tam-$inicio))
         tail -n$pegar temp.txt > results/v1/$nome_arq
 
         # results for v2
-        ./gera $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
+        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
         tam=$(wc -l temp.txt | cut -d' ' -f1)
         inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
         pegar=$(($tam-$inicio))
@@ -71,11 +71,11 @@ K="64 128 200 256 512 600 800 1024 2000 3000 4096 6000 7000 10000 50000 100000"
 for k in $K
 do
     # getting time (no need for likwid)
-    ./gera $k $n | ./ajustePol_v1 | tail -n1 > temp.txt
+    ./gera_entrada $k $n | ./ajustePol_v1 | tail -n1 > temp.txt
     tempo_monta=$(cut -d' ' temp.txt -f2)
     tempo_elimina=$(cut -d' ' temp.txt -f3)
     echo $n","$k",1,"$tempo_monta","$tempo_elimina >> results/time.csv
-    ./gera $k $n | ./ajustePol_v2 | tail -n1 > temp.txt
+    ./gera_entrada $k $n | ./ajustePol_v2 | tail -n1 > temp.txt
     tempo_monta=$(cut -d' ' temp.txt -f2)
     tempo_elimina=$(cut -d' ' temp.txt -f3)
     echo $n","$k",2,"$tempo_monta","$tempo_elimina >> results/time.csv
@@ -85,14 +85,14 @@ do
         echo $nome_arq
 
         # results for v1
-        ./gera $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
+        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v1 > temp.txt
         tam=$(wc -l temp.txt | cut -d' ' -f1)
         inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
         pegar=$(($tam-$inicio))
         tail -n$pegar temp.txt > results/v1/$nome_arq
 
         # results for v2
-        ./gera $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
+        ./gera_entrada $k $n | likwid-perfctr -O -C 3 -g $metrica -m ./ajustePol_v2 > temp.txt
         tam=$(wc -l temp.txt | cut -d' ' -f1)
         inicio=$(grep '\-\-' temp.txt -n | tail -n1 | cut -d':' -f1)
         pegar=$(($tam-$inicio))
