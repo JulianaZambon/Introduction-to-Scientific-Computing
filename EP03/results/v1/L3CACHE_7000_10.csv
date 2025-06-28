@@ -1,48 +1,48 @@
 STRUCT,Info,3
 CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
 CPU type:,Intel Kabylake processor,
-CPU clock:,1.79981198 GHz,
+CPU clock:,1.799549717 GHz,
 TABLE,Region v1_montaSL,Group 1 Raw,L3CACHE,6
 Region Info,HWThread 3,
-RDTSC Runtime [s],0.015775,
+RDTSC Runtime [s],0.015861,
 call count,1,
 Event,Counter,HWThread 3
 INSTR_RETIRED_ANY,FIXC0,126636000
-CPU_CLK_UNHALTED_CORE,FIXC1,60219350
-CPU_CLK_UNHALTED_REF,FIXC2,27876000
-MEM_LOAD_RETIRED_L3_HIT,PMC0,300
-MEM_LOAD_RETIRED_L3_MISS,PMC1,55
-UOPS_RETIRED_ALL,PMC2,151357100
+CPU_CLK_UNHALTED_CORE,FIXC1,60696350
+CPU_CLK_UNHALTED_REF,FIXC2,28094780
+MEM_LOAD_RETIRED_L3_HIT,PMC0,326
+MEM_LOAD_RETIRED_L3_MISS,PMC1,48
+UOPS_RETIRED_ALL,PMC2,151354800
 TABLE,Region v1_montaSL,Group 1 Metric,L3CACHE,7
 Metric,HWThread 3,
-Runtime (RDTSC) [s],0.0158,
-Runtime unhalted [s],0.0335,
-Clock [MHz],3888.0581,
-CPI,0.4755,
-L3 request rate,2.345447e-06,
-L3 miss rate,3.633791e-07,
-L3 miss ratio,0.1549,
+Runtime (RDTSC) [s],0.0159,
+Runtime unhalted [s],0.0337,
+Clock [MHz],3887.7720,
+CPI,0.4793,
+L3 request rate,2.471015e-06,
+L3 miss rate,3.171356e-07,
+L3 miss ratio,0.1283,
 STRUCT,Info,3
 CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
 CPU type:,Intel Kabylake processor,
-CPU clock:,1.79981198 GHz,
+CPU clock:,1.799549717 GHz,
 TABLE,Region v1_eliminacaoGauss,Group 1 Raw,L3CACHE,6
 Region Info,HWThread 3,
 RDTSC Runtime [s],0.000001,
 call count,1,
 Event,Counter,HWThread 3
 INSTR_RETIRED_ANY,FIXC0,11774
-CPU_CLK_UNHALTED_CORE,FIXC1,17369
-CPU_CLK_UNHALTED_REF,FIXC2,7875
-MEM_LOAD_RETIRED_L3_HIT,PMC0,56
+CPU_CLK_UNHALTED_CORE,FIXC1,16300
+CPU_CLK_UNHALTED_REF,FIXC2,7650
+MEM_LOAD_RETIRED_L3_HIT,PMC0,52
 MEM_LOAD_RETIRED_L3_MISS,PMC1,2
-UOPS_RETIRED_ALL,PMC2,14640
+UOPS_RETIRED_ALL,PMC2,14648
 TABLE,Region v1_eliminacaoGauss,Group 1 Metric,L3CACHE,7
 Metric,HWThread 3,
-Runtime (RDTSC) [s],1.334526e-06,
-Runtime unhalted [s],9.650452e-06,
-Clock [MHz],3969.6424,
-CPI,1.4752,
-L3 request rate,0.0040,
+Runtime (RDTSC) [s],1.306686e-06,
+Runtime unhalted [s],9.057821e-06,
+Clock [MHz],3834.3347,
+CPI,1.3844,
+L3 request rate,0.0037,
 L3 miss rate,0.0001,
-L3 miss ratio,0.0345,
+L3 miss ratio,0.0370,

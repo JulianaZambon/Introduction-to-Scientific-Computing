@@ -233,14 +233,14 @@ Esses gráficos mostram o tempo gasto para cada etapa do programa  usando `times
 
 ![alt text](graphics/a/TIME.png)
 
-Explicação Gráfico 01: O gráfico compara o desempenho de duas versões do programa (`v1` e `v2`) para diferentes graus de polinômio (`N=10` e `N=1000`), em função do número de pontos de entrada (`K`). Observa-se que as curvas `v1 10` (azul tracejado) e `v1 1000` (verde tracejado) mostram um crescimento de tempo de execução significativo e aproximadamente linear em escala logarítmica, indicando uma complexidade polinomial em relação a `K`. A versão `v2 10` (amarelo sólido) apresenta uma melhoria drástica no tempo de execução para $N=10$, sendo ordens de magnitude mais rápida que `v1 10`, especialmente para valores maiores de `K`. Isso demonstra a eficácia das otimizações para graus de polinômio menores. Para `N=1000`, a `v2 1000` (preto sólido) também exibe melhora em relação à `v1 1000`, embora o tempo ainda seja considerável devido à complexidade inerente ao maior grau do polinômio. O comportamento da `v2 10` para `K` muito grande ($K > 10^7$) mostra uma estabilização ou leve queda no tempo, o que sugere um limite de eficiência ou saturação de algum recurso.
+Explicação Gráfico 01: 
 
 
 - **Gráfico 02: (B) solução do SL pelo Método da Eliminação de Gauss**
 
 ![alt text](graphics/b/TIME.png)
 
-Explicação Gráfico 02: Este gráfico apresenta o tempo de execução para a solução do Sistema Linear (SL) utilizando o Método da Eliminação de Gauss, em função do número de pontos `K`. Diferentemente da geração do SL, a complexidade computacional da Eliminação de Gauss é dominada pelo grau do polinômio $N$, crescendo com $O(N^3)$. As curvas para $N=1000$ (`v1 1000` em verde tracejado e `v2 1000` em preto sólido) mostram tempos de execução significativamente mais altos e relativamente estáveis com o aumento de `K`. Isso é esperado, pois o tamanho da matriz $(N+1) \times (N+1)$ é fixo para cada $N$, e `K` não afeta diretamente o custo da Eliminação de Gauss. As curvas para $N=10$ (`v1 10` em azul tracejado e `v2 10` em amarelo sólido) apresentam tempos de execução ordens de magnitude menores, quase no limite inferior do gráfico, o que também é consistente com a complexidade $N^3$ para um $N$ pequeno. Observa-se que a versão `v2` (amarelo e preto) para ambos os valores de $N$ mostra tempos de execução muito próximos ou ligeiramente melhores que a `v1`, indicando que as otimizações, se aplicadas à Eliminação de Gauss, não trouxeram um ganho de tempo tão expressivo quanto na fase de geração do SL, mas mantiveram a performance ou a melhoraram marginalmente. A pequena variação vertical nas linhas para $N=1000$ pode ser atribuída a ruído de medição ou pequenas flutuações de ambiente.
+Explicação Gráfico 02: 
 
 ### Gráficos de Cache Miss L3
 Esses gráficos mostram a taxa de cache misses na cache L3 com o resultado de "cache miss RATIO".
@@ -249,13 +249,13 @@ Esses gráficos mostram a taxa de cache misses na cache L3 com o resultado de "c
 
 ![alt text](graphics/a/L3_MISS_RATIO.png)
 
-Explicação Gráfico 01: Este gráfico ilustra a taxa de cache misses na L3 cache durante a geração do SL. Para `v1 10` (azul tracejado) e `v1 1000` (verde tracejado), a taxa de misses mostra flutuações e tende a ser mais alta em geral, indicando um uso menos eficiente da cache L3. As otimizações em `v2 10` (amarelo sólido) e `v2 1000` (preto sólido) parecem reduzir a taxa de misses para `K` menores, sugerindo um melhor aproveitamento da localidade de dados. No entanto, para `K` muito grandes, a taxa de misses para `v2 10` e `v2 1000` pode aumentar ou estabilizar em valores mais altos, indicando que o volume de dados excede a capacidade da cache L3, levando a acessos mais frequentes à memória principal. Para `v2 10`, a queda abrupta da taxa de misses ao redor de $K=10^4$ e seu posterior aumento drástico para $K > 10^5$ seguido de estabilização em um valor alto é um comportamento notável que sugere transições na forma como os dados são acessados e o limite da cache é atingido. A `v2 1000` também mostra um aumento acentuado para $K > 10^4$.
+Explicação Gráfico 01: 
 
 - **Gráfico 02: (B) solução do SL pelo Método da Eliminação de Gauss**
 
 ![alt text](graphics/b/L3_MISS_RATIO.png)
 
-Explicação Gráfico 02: Este gráfico exibe a taxa de cache misses na L3 para a fase de solução do Sistema Linear. Para $N=10$ (`v1 10` em azul tracejado e `v2 10` em amarelo sólido), a taxa de misses é muito baixa e próxima de zero para a maioria dos valores de `K`. Isso ocorre porque a matriz $(N+1) \times (N+1)$ para $N=10$ é pequena ($11 \times 11$) e cabe completamente na cache L3, resultando em poucos acessos à memória principal. As flutuações iniciais em `v1 10` podem ser ruído de medição. Para $N=1000$ (`v1 1000` em verde tracejado e `v2 1000` em preto sólido), a taxa de cache misses é significativamente maior e mais errática, especialmente em `v1 1000`. A matriz para $N=1000$ ($1001 \times 1001$) é muito grande e não cabe totalmente na cache L3, levando a constantes trocas de dados entre a cache e a memória principal. A `v2 1000` parece ter um comportamento similar à `v1 1000`, com um grande pico de misses em $K$ menores e depois se estabilizando em uma taxa alta, sugerindo que as otimizações não impactaram significativamente a localidade de acesso à memória para a Eliminação de Gauss em grande escala, ou que o problema é inerentemente intensivo em misses para esse $N$.
+Explicação Gráfico 02: 
 
 
 ### Gráficos de Energia
@@ -263,16 +263,16 @@ Esses gráficos mostram o consumo de energia durante a execução, utilizando o 
 
 - **Gráfico 01: (A) geração do SL pelo Método dos Mínimos Quadrados**
 
-![alt text](graphics/a/ENERGY_LOG.png)
+![alt text](graphics/a/ENERGY.png)
 
-Explicação Gráfico 01: Este gráfico (com ambos os eixos em escala logarítmica) demonstra o consumo de energia em Joules durante a geração do SL. É esperado que o consumo de energia seja diretamente proporcional ao tempo de execução. Quanto mais tempo o programa passa executando, mais energia ele tende a consumir. Todas as curvas mostram um crescimento na energia consumida à medida que K aumenta, o que é natural, pois mais pontos exigem mais processamento para a geração do sistema linear. As curvas `v1 10` (azul tracejado) e `v1 1000` (verde tracejado) mostram um crescimento substancial de energia com `K`, com `v1 1000` consumindo significativamente mais energia devido ao maior grau do polinômio. A versão `v2 10` (amarelo sólido) exibe uma redução drástica no consumo de energia em comparação com `v1 10`, evidenciando a eficácia das otimizações para $N=10$. No entanto, o comportamento da `v2 10` para `K` muito grandes ($K > 10^7$), onde a energia parece estabilizar ou até decrescer, é incomum e pode indicar uma saturação de desempenho ou um artefato de medição para volumes de dados extremos. A `v2 1000` (preto sólido) também demonstra uma melhora em relação à `v1 1000`, consumindo menos energia, mas ainda com um crescimento pronunciado com `K` devido à complexidade intrínseca de $N=1000$.
+Explicação Gráfico 01: 
 
 
 - **Gráfico 02: (B) solução do SL pelo Método da Eliminação de Gauss**
 
-![alt text](graphics/b/ENERGY_LOG.png)
+![alt text](graphics/b/ENERGY.png)
 
-Explicação Gráfico 02: Este gráfico, com eixos logarítmicos, ilustra o consumo de energia em Joules para a etapa de solução do Sistema Linear. Assim como no tempo de execução, o consumo de energia é predominantemente determinado pelo grau do polinômio $N$. As curvas para $N=1000$ (`v1 1000` em verde tracejado e `v2 1000` em preto sólido) exibem um consumo de energia muito maior e relativamente estável com `K`, refletindo a alta carga computacional de $O(N^3)$ para um $N$ grande. Já as curvas para $N=10$ (`v1 10` em azul tracejado e `v2 10` em amarelo sólido) mostram um consumo de energia extremamente baixo, quase imperceptível na escala do gráfico para a maioria dos pontos, o que é consistente com o baixo custo da Eliminação de Gauss para um $N$ pequeno. É notável que, para $N=10$, o consumo de energia é tão baixo que as linhas quase se fundem com o eixo $X$, indicando que essa fase é extremamente rápida e eficiente para $N$ pequenos. Para $N=1000$, a `v2 1000` apresenta um comportamento muito similar à `v1 1000`, indicando que as otimizações, se existiram para essa fase, não resultaram em uma economia de energia significativa em comparação com o custo base da Eliminação de Gauss para matrizes grandes. O consumo de energia é proporcional ao tempo, e as otimizacões que não resultam em ganhos de tempo substanciais não trarão grandes ganhos de energia.
+Explicação Gráfico 02: 
 
 
 ### Gráficos de Operações Aritméticas
@@ -282,32 +282,32 @@ Esses gráficos mostram o desempenho em operações de ponto flutuante, utilizan
 
 ![alt text](graphics/a/FLOPS_DP.png)
 
-Explicação Gráfico 01: Este gráfico apresenta o desempenho em MFLOP/s (Mega Floating-Point Operations per Second) para operações de ponto flutuante de precisão dupla (DP) durante a geração do SL. As curvas `v1 10` (azul tracejado) e `v1 1000` (verde tracejado) mostram níveis de FLOPS DP relativamente estáveis ou com leves variações, indicando uma taxa de execução de instruções de ponto flutuante consistente para as versões originais. Em contraste, a `v2 10` (amarelo sólido) e `v2 1000` (preto sólido) exibem uma queda significativa nos FLOPS DP à medida que `K` aumenta e depois se estabilizam em valores muito baixos para `K` maiores. Isso é contraintuitivo se considerarmos que `v2` é mais rápida. Uma baixa taxa de FLOPS, combinada com um tempo de execução menor, sugere que as otimizações na `v2` reduziram drasticamente o *número total de operações de ponto flutuante* (FLOPs) realizadas ou que o cálculo está sendo realizado de forma tão eficiente que o programa está limitado por outros fatores (como acesso à memória), e não pela capacidade de execução de FLOPS. Para a `v2 10`, o pico inicial de FLOPS e a posterior queda acentuada com o aumento de `K` até quase zero é um forte indicativo de que a otimização pode estar evitando grande parte dos cálculos de ponto flutuante para $N=10$.
+Explicação Gráfico 01:
 
 - **Gráfico 02: (A) geração do SL pelo Método dos Mínimos Quadrados em FLOPS AVX DP**
 
 ![alt text](graphics/a/FLOPS_AVX_DP.png)
 
-Explicação Gráfico 02: Este gráfico foca nas operações de ponto flutuante de precisão dupla que utilizam as instruções AVX (Advanced Vector Extensions). As curvas `v1 10` (azul tracejado) e `v1 1000` (verde tracejado) mostram um uso muito baixo ou inexistente de instruções AVX, o que é esperado para uma versão não otimizada para vetorização. Por outro lado, `v2 10` (amarelo sólido) e `v2 1000` (preto sólido) apresentam um uso maior de instruções AVX, especialmente para `v2 10` em valores menores de `K`. No entanto, de forma similar ao FLOPS DP, a taxa de FLOPS AVX DP para `v2` tende a cair drasticamente com o aumento de `K`, chegando a valores próximos de zero para `K` muito grandes (especialmente `v2 10`). Para `v2 10`, o pico inicial de AVX FLOPS e a posterior queda para valores próximos de zero é uma evidência de que a vetorização AVX pode ser eficaz para `K` menores, mas para `K` muito grandes, a otimização pode estar eliminando a necessidade de muitas dessas operações vetorizadas ou o programa está entrando em um gargalo diferente (e.g., I/O, cache) que não envolve o uso intensivo de AVX para a geração do SL. Isso sugere que as otimizações não necessariamente aumentam o *throughput* de AVX, mas podem reduzir o *volume total* de FLOPs necessários.
+Explicação Gráfico 02: 
 
 - **Gráfico 03:(B) solução do SL pelo Método da Eliminação de Gauss em FLOPS DP**
 
 ![alt text](graphics/b/FLOPS_DP.png)
 
-Explicação Gráfico 03: Este gráfico exibe a taxa de operações de ponto flutuante de precisão dupla (FLOPS DP) para a fase de solução do Sistema Linear (Eliminação de Gauss). Para $N=10$ (`v1 10` em azul tracejado e `v2 10` em amarelo sólido), os FLOPS DP são relativamente baixos e estáveis, o que é esperado dada a pequena dimensão da matriz e, consequentemente, o baixo volume de operações para essa etapa. Para $N=1000$ (`v1 1000` em verde tracejado e `v2 1000` em preto sólido), as taxas de FLOPS DP são significativamente mais altas e mostram flutuações, mas se mantêm em um patamar elevado. A Eliminação de Gauss é um algoritmo intensivo em FLOPS, e para $N=1000$, a quantidade de operações é vasta. As curvas `v1 1000` e `v2 1000` se comportam de maneira muito similar, com a `v2 1000` frequentemente atingindo picos um pouco mais altos, o que sugere que as otimizações podem ter otimizado o pipeline ou o acesso a dados de forma a permitir uma taxa de FLOPS ligeiramente maior em alguns pontos, mas sem uma mudança drástica no desempenho geral de FLOPS entre as versões. Isso implica que a `v2` para $N=1000$ não realizou uma redução fundamental no número total de FLOPS, mas talvez uma otimização no ritmo de execução.
+Explicação Gráfico 03: 
 
-- **Gráfico 04: (B) solução do SL pelo Método da Eliminação de Gaussem FLOPS AVX DP**
+- **Gráfico 04: (B) solução do SL pelo Método da Eliminação de Gauss em FLOPS AVX DP**
 
 ![alt text](graphics/b/FLOPS_AVX_DP.png)
 
-Explicação Gráfico 04: Este gráfico mostra a taxa de operações de ponto flutuante de precisão dupla utilizando instruções AVX (FLOPS AVX DP) para a fase de solução do Sistema Linear. Para $N=10$ (`v1 10` em azul tracejado e `v2 10` em amarelo sólido), o uso de AVX é muito baixo e próximo de zero para ambas as versões. Isso é esperado, pois para uma matriz tão pequena, o overhead da vetorização pode não compensar, ou o compilador pode não vetorizar eficazmente para um $N$ tão reduzido. Para $N=1000$ (`v1 1000` em verde tracejado e `v2 1000` em preto sólido), as taxas de FLOPS AVX DP são significativamente mais altas, indicando que tanto a versão original quanto a otimizada estão utilizando as instruções AVX em certa medida para a Eliminação de Gauss, o que é comum para operações matriciais. A curva `v2 1000` frequentemente exibe picos mais altos de FLOPS AVX DP em comparação com `v1 1000`. Isso é uma evidência de que as otimizações na `v2` para a Eliminação de Gauss (como loop unrolling, reordenação de loops ou uso de intrinsics AVX) foram bem-sucedidas em aproveitar as unidades vetorizadas do processador, permitindo a execução de mais operações de ponto flutuante em paralelo por unidade de tempo, o que contribui para a eficiência computacional, mesmo que os ganhos de tempo absolutos para $N=1000$ não sejam dramáticos como na geração do SL.
+Explicação Gráfico 04:
 
 #### Resultados de AVX Flops
-Os gráficos de FLOPS AVX DP são cruciais para entender como as otimizações da `v2` aproveitam as instruções de vetorização do processador. Para a **Geração do SL (A)**, a queda dos FLOPS AVX DP para a `v2` (especialmente `v2 10`) à medida que `K` cresce, juntamente com a melhoria no tempo, sugere que as otimizações podem estar focando mais em *reduzir o volume total de cálculos de ponto flutuante necessários* do que em apenas acelerar a execução desses cálculos via vetorização. Isso pode ser alcançado, por exemplo, eliminando cálculos redundantes ou aproveitando propriedades matemáticas para evitar operações caras. Para a **Solução do SL (B)**, os gráficos de FLOPS AVX DP para $N=1000$ demonstram que a `v2 1000` consegue atingir taxas de FLOPS AVX DP mais elevadas em comparação com `v1 1000`. Isso é uma indicação de que a versão otimizada está explorando de forma mais eficiente as unidades de vetorização do processador (instruções AVX) para executar as operações matriciais da Eliminação de Gauss em paralelo. Este aumento na taxa de operações vetorizadas por segundo é um fator-chave para a melhoria de desempenho em problemas computacionalmente intensivos.
+
 
 
 ## Conclusão
 
 Este trabalho demonstrou a importância e o impacto significativo de otimizações de código de baixo nível no desempenho de algoritmos numéricos intensivos. Através da comparação entre a versão original (`v1`) e a versão otimizada (`v2`) do programa `ajustePol`, foi possível observar ganhos substanciais em diversas métricas de desempenho.
 
-Em suma, este trabalho valida a eficácia das otimizações propostas. A `v2` demonstra ser significativamente mais performática e energeticamente eficiente, especialmente quando o problema envolve um grande número de pontos (`K`) e um grau polinomial menor (`N=10`). Para graus polinomiais maiores (`N=1000`), onde a complexidade do algoritmo de Eliminação de Gauss se torna dominante, as otimizações ainda proporcionam ganhos, principalmente através do melhor aproveitamento do hardware (como as instruções AVX), mas a magnitude dos ganhos é limitada pela natureza do problema e do algoritmo. Este estudo ressalta a importância de um balanceamento entre otimizações de uso de memória, de fluxo de controle e de aproveitamento das capacidades do processador para obter o máximo desempenho.
+Em suma, este trabalho valida a eficácia das otimizações propostas. A `v2` demonstra 

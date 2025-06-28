@@ -1,63 +1,63 @@
 STRUCT,Info,3
 CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
 CPU type:,Intel Kabylake processor,
-CPU clock:,1.800058009 GHz,
+CPU clock:,1.7990424 GHz,
 TABLE,Region v2_montaSL,Group 1 Raw,ENERGY,8
 Region Info,HWThread 3,
-RDTSC Runtime [s],10.610280,
+RDTSC Runtime [s],0.578367,
 call count,1,
 Event,Counter,HWThread 3
-INSTR_RETIRED_ANY,FIXC0,7710440000
-CPU_CLK_UNHALTED_CORE,FIXC1,38380410000
-CPU_CLK_UNHALTED_REF,FIXC2,17794720000
-TEMP_CORE,TMP0,84
-PWR_PKG_ENERGY,PWR0,123.5750
-PWR_PP0_ENERGY,PWR1,93.8432
+INSTR_RETIRED_ANY,FIXC0,7200006000
+CPU_CLK_UNHALTED_CORE,FIXC1,2098436000
+CPU_CLK_UNHALTED_REF,FIXC2,1033460000
+TEMP_CORE,TMP0,90
+PWR_PKG_ENERGY,PWR0,8.1257
+PWR_PP0_ENERGY,PWR1,6.6146
 PWR_PP1_ENERGY,PWR2,0
-PWR_DRAM_ENERGY,PWR3,19.3701
+PWR_DRAM_ENERGY,PWR3,0.1928
 TABLE,Region v2_montaSL,Group 1 Metric,ENERGY,13
 Metric,HWThread 3,
-Runtime (RDTSC) [s],10.6103,
-Runtime unhalted [s],21.3218,
-Clock [MHz],3882.4418,
-CPI,4.9777,
-Temperature [C],84,
-Energy [J],123.5750,
-Power [W],11.6467,
-Energy PP0 [J],93.8432,
-Power PP0 [W],8.8446,
+Runtime (RDTSC) [s],0.5784,
+Runtime unhalted [s],1.1664,
+Clock [MHz],3652.9477,
+CPI,0.2914,
+Temperature [C],90,
+Energy [J],8.1257,
+Power [W],14.0494,
+Energy PP0 [J],6.6146,
+Power PP0 [W],11.4366,
 Energy PP1 [J],0,
 Power PP1 [W],0,
-Energy DRAM [J],19.3701,
-Power DRAM [W],1.8256,
+Energy DRAM [J],0.1928,
+Power DRAM [W],0.3334,
 STRUCT,Info,3
 CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
 CPU type:,Intel Kabylake processor,
-CPU clock:,1.800058009 GHz,
+CPU clock:,1.7990424 GHz,
 TABLE,Region v2_eliminacaoGauss,Group 1 Raw,ENERGY,8
 Region Info,HWThread 3,
-RDTSC Runtime [s],0.000002,
+RDTSC Runtime [s],0.000001,
 call count,1,
 Event,Counter,HWThread 3
-INSTR_RETIRED_ANY,FIXC0,12418
-CPU_CLK_UNHALTED_CORE,FIXC1,19618
-CPU_CLK_UNHALTED_REF,FIXC2,9375
-TEMP_CORE,TMP0,84
-PWR_PKG_ENERGY,PWR0,0.0136
-PWR_PP0_ENERGY,PWR1,0.0026
+INSTR_RETIRED_ANY,FIXC0,12333
+CPU_CLK_UNHALTED_CORE,FIXC1,16957
+CPU_CLK_UNHALTED_REF,FIXC2,8250
+TEMP_CORE,TMP0,90
+PWR_PKG_ENERGY,PWR0,0
+PWR_PP0_ENERGY,PWR1,0.0018
 PWR_PP1_ENERGY,PWR2,0
 PWR_DRAM_ENERGY,PWR3,0
 TABLE,Region v2_eliminacaoGauss,Group 1 Metric,ENERGY,13
 Metric,HWThread 3,
-Runtime (RDTSC) [s],1.658836e-06,
-Runtime unhalted [s],1.089854e-05,
-Clock [MHz],3766.7774,
-CPI,1.5798,
-Temperature [C],84,
-Energy [J],0.0136,
-Power [W],8205.0546,
-Energy PP0 [J],0.0026,
-Power PP0 [W],1545.3469,
+Runtime (RDTSC) [s],1.330020e-06,
+Runtime unhalted [s],9.425570e-06,
+Clock [MHz],3697.7408,
+CPI,1.3749,
+Temperature [C],90,
+Energy [J],0,
+Power [W],0,
+Energy PP0 [J],0.0018,
+Power PP0 [W],1376.7124,
 Energy PP1 [J],0,
 Power PP1 [W],0,
 Energy DRAM [J],0,

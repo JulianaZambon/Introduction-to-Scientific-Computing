@@ -1,63 +1,63 @@
 STRUCT,Info,3
 CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
 CPU type:,Intel Kabylake processor,
-CPU clock:,1.798399613 GHz,
+CPU clock:,1.799900757 GHz,
 TABLE,Region v1_montaSL,Group 1 Raw,ENERGY,8
 Region Info,HWThread 3,
-RDTSC Runtime [s],0.001308,
+RDTSC Runtime [s],0.001182,
 call count,1,
 Event,Counter,HWThread 3
 INSTR_RETIRED_ANY,FIXC0,9269062
-CPU_CLK_UNHALTED_CORE,FIXC1,4433164
-CPU_CLK_UNHALTED_REF,FIXC2,2084475
-TEMP_CORE,TMP0,57
-PWR_PKG_ENERGY,PWR0,0.0286
-PWR_PP0_ENERGY,PWR1,0.0137
+CPU_CLK_UNHALTED_CORE,FIXC1,4416078
+CPU_CLK_UNHALTED_REF,FIXC2,2047050
+TEMP_CORE,TMP0,54
+PWR_PKG_ENERGY,PWR0,0.0122
+PWR_PP0_ENERGY,PWR1,0.0138
 PWR_PP1_ENERGY,PWR2,0
-PWR_DRAM_ENERGY,PWR3,0.0007
+PWR_DRAM_ENERGY,PWR3,0.0003
 TABLE,Region v1_montaSL,Group 1 Metric,ENERGY,13
 Metric,HWThread 3,
-Runtime (RDTSC) [s],0.0013,
+Runtime (RDTSC) [s],0.0012,
 Runtime unhalted [s],0.0025,
-Clock [MHz],3824.7522,
-CPI,0.4783,
-Temperature [C],57,
-Energy [J],0.0286,
-Power [W],21.8775,
-Energy PP0 [J],0.0137,
-Power PP0 [W],10.4489,
+Clock [MHz],3882.9057,
+CPI,0.4764,
+Temperature [C],54,
+Energy [J],0.0122,
+Power [W],10.3255,
+Energy PP0 [J],0.0138,
+Power PP0 [W],11.6678,
 Energy PP1 [J],0,
 Power PP1 [W],0,
-Energy DRAM [J],0.0007,
-Power DRAM [W],0.5131,
+Energy DRAM [J],0.0003,
+Power DRAM [W],0.2581,
 STRUCT,Info,3
 CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
 CPU type:,Intel Kabylake processor,
-CPU clock:,1.798399613 GHz,
+CPU clock:,1.799900757 GHz,
 TABLE,Region v1_eliminacaoGauss,Group 1 Raw,ENERGY,8
 Region Info,HWThread 3,
 RDTSC Runtime [s],0.000001,
 call count,1,
 Event,Counter,HWThread 3
 INSTR_RETIRED_ANY,FIXC0,12110
-CPU_CLK_UNHALTED_CORE,FIXC1,15589
+CPU_CLK_UNHALTED_CORE,FIXC1,15600
 CPU_CLK_UNHALTED_REF,FIXC2,7350
-TEMP_CORE,TMP0,57
+TEMP_CORE,TMP0,54
 PWR_PKG_ENERGY,PWR0,0
-PWR_PP0_ENERGY,PWR1,0.0012
+PWR_PP0_ENERGY,PWR1,0.0013
 PWR_PP1_ENERGY,PWR2,0
 PWR_DRAM_ENERGY,PWR3,0
 TABLE,Region v1_eliminacaoGauss,Group 1 Metric,ENERGY,13
 Metric,HWThread 3,
-Runtime (RDTSC) [s],1.178973e-06,
-Runtime unhalted [s],8.668263e-06,
-Clock [MHz],3814.3199,
-CPI,1.2873,
-Temperature [C],57,
+Runtime (RDTSC) [s],1.233349e-06,
+Runtime unhalted [s],8.667145e-06,
+Clock [MHz],3820.1975,
+CPI,1.2882,
+Temperature [C],54,
 Energy [J],0,
 Power [W],0,
-Energy PP0 [J],0.0012,
-Power PP0 [W],1035.3952,
+Energy PP0 [J],0.0013,
+Power PP0 [W],1039.2338,
 Energy PP1 [J],0,
 Power PP1 [W],0,
 Energy DRAM [J],0,
