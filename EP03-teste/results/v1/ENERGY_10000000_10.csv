@@ -1,0 +1,64 @@
+STRUCT,Info,3
+CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
+CPU type:,Intel Kabylake processor,
+CPU clock:,1.799970372 GHz,
+TABLE,Region v1_montaSL,Group 1 Raw,ENERGY,8
+Region Info,HWThread 3,
+RDTSC Runtime [s],23.005150,
+call count,1,
+Event,Counter,HWThread 3
+INSTR_RETIRED_ANY,FIXC0,180900000000
+CPU_CLK_UNHALTED_CORE,FIXC1,86950600000
+CPU_CLK_UNHALTED_REF,FIXC2,40628030000
+TEMP_CORE,TMP0,90
+PWR_PKG_ENERGY,PWR0,327.1710
+PWR_PP0_ENERGY,PWR1,268.6633
+PWR_PP1_ENERGY,PWR2,0
+PWR_DRAM_ENERGY,PWR3,8.9133
+TABLE,Region v1_montaSL,Group 1 Metric,ENERGY,13
+Metric,HWThread 3,
+Runtime (RDTSC) [s],23.0052,
+Runtime unhalted [s],48.3067,
+Clock [MHz],3852.2297,
+CPI,0.4807,
+Temperature [C],90,
+Energy [J],327.1710,
+Power [W],14.2216,
+Energy PP0 [J],268.6633,
+Power PP0 [W],11.6784,
+Energy PP1 [J],0,
+Power PP1 [W],0,
+Energy DRAM [J],8.9133,
+Power DRAM [W],0.3874,
+STRUCT,Info,3
+CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
+CPU type:,Intel Kabylake processor,
+CPU clock:,1.799970372 GHz,
+TABLE,Region v1_eliminacaoGauss,Group 1 Raw,ENERGY,8
+Region Info,HWThread 3,
+RDTSC Runtime [s],0.000001,
+call count,1,
+Event,Counter,HWThread 3
+INSTR_RETIRED_ANY,FIXC0,12110
+CPU_CLK_UNHALTED_CORE,FIXC1,18402
+CPU_CLK_UNHALTED_REF,FIXC2,8550
+TEMP_CORE,TMP0,90
+PWR_PKG_ENERGY,PWR0,0.0147
+PWR_PP0_ENERGY,PWR1,0.0010
+PWR_PP1_ENERGY,PWR2,0
+PWR_DRAM_ENERGY,PWR3,0.0005
+TABLE,Region v1_eliminacaoGauss,Group 1 Metric,ENERGY,13
+Metric,HWThread 3,
+Runtime (RDTSC) [s],1.331431e-06,
+Runtime unhalted [s],1.022350e-05,
+Clock [MHz],3874.0415,
+CPI,1.5196,
+Temperature [C],90,
+Energy [J],0.0147,
+Power [W],11047.8650,
+Energy PP0 [J],0.0010,
+Power PP0 [W],733.4684,
+Energy PP1 [J],0,
+Power PP1 [W],0,
+Energy DRAM [J],0.0005,
+Power DRAM [W],366.7341,

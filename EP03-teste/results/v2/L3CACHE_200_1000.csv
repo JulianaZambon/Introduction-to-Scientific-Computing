@@ -1,0 +1,48 @@
+STRUCT,Info,3
+CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
+CPU type:,Intel Kabylake processor,
+CPU clock:,1.799364729 GHz,
+TABLE,Region v2_montaSL,Group 1 Raw,L3CACHE,6
+Region Info,HWThread 3,
+RDTSC Runtime [s],0.101879,
+call count,1,
+Event,Counter,HWThread 3
+INSTR_RETIRED_ANY,FIXC0,308942400
+CPU_CLK_UNHALTED_CORE,FIXC1,380667400
+CPU_CLK_UNHALTED_REF,FIXC2,176308900
+MEM_LOAD_RETIRED_L3_HIT,PMC0,3098761
+MEM_LOAD_RETIRED_L3_MISS,PMC1,1643139
+UOPS_RETIRED_ALL,PMC2,363060100
+TABLE,Region v2_montaSL,Group 1 Metric,L3CACHE,7
+Metric,HWThread 3,
+Runtime (RDTSC) [s],0.1019,
+Runtime unhalted [s],0.2116,
+Clock [MHz],3884.9967,
+CPI,1.2322,
+L3 request rate,0.0131,
+L3 miss rate,0.0045,
+L3 miss ratio,0.3465,
+STRUCT,Info,3
+CPU name:,Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz,
+CPU type:,Intel Kabylake processor,
+CPU clock:,1.799364729 GHz,
+TABLE,Region v2_eliminacaoGauss,Group 1 Raw,L3CACHE,6
+Region Info,HWThread 3,
+RDTSC Runtime [s],0.124753,
+call count,1,
+Event,Counter,HWThread 3
+INSTR_RETIRED_ANY,FIXC0,528622500
+CPU_CLK_UNHALTED_CORE,FIXC1,477895700
+CPU_CLK_UNHALTED_REF,FIXC2,221309200
+MEM_LOAD_RETIRED_L3_HIT,PMC0,6516846
+MEM_LOAD_RETIRED_L3_MISS,PMC1,1464756
+UOPS_RETIRED_ALL,PMC2,615765000
+TABLE,Region v2_eliminacaoGauss,Group 1 Metric,L3CACHE,7
+Metric,HWThread 3,
+Runtime (RDTSC) [s],0.1248,
+Runtime unhalted [s],0.2656,
+Clock [MHz],3885.5532,
+CPI,0.9040,
+L3 request rate,0.0130,
+L3 miss rate,0.0024,
+L3 miss ratio,0.1835,
