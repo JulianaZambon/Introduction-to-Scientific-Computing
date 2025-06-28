@@ -307,3 +307,7 @@ Os gráficos de FLOPS AVX DP são cruciais para entender como as otimizações d
 
 
 ## Conclusão
+
+Este trabalho demonstrou a importância e o impacto significativo de otimizações de código de baixo nível no desempenho de algoritmos numéricos intensivos. Através da comparação entre a versão original (`v1`) e a versão otimizada (`v2`) do programa `ajustePol`, foi possível observar ganhos substanciais em diversas métricas de desempenho.
+
+Em suma, este trabalho valida a eficácia das otimizações propostas. A `v2` demonstra ser significativamente mais performática e energeticamente eficiente, especialmente quando o problema envolve um grande número de pontos (`K`) e um grau polinomial menor (`N=10`). Para graus polinomiais maiores (`N=1000`), onde a complexidade do algoritmo de Eliminação de Gauss se torna dominante, as otimizações ainda proporcionam ganhos, principalmente através do melhor aproveitamento do hardware (como as instruções AVX), mas a magnitude dos ganhos é limitada pela natureza intrínseca do problema e do algoritmo. Este estudo ressalta a importância de um balanceamento entre otimizações de uso de memória, de fluxo de controle e de aproveitamento das capacidades do processador para obter o máximo desempenho.
