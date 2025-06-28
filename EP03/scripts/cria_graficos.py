@@ -178,10 +178,10 @@ plot_from_data(data, "graphics", "ENERGY.png")
 data = organize_data(get_info("ENERGY", "Energy [J]"))
 plot_from_data(data, "graphics", "ENERGY_LOG.png", y_log=True)
 
-data = organize_data(get_info("FLOPS_DP", "DP MFLOP/s"))
+data = organize_data(get_info("FLOPS_DP", "DP [MFLOP/s]"))
 plot_from_data(data, "graphics", "FLOPS_DP.png")
 
-data = organize_data(get_info("FLOPS_DP", "AVX DP MFLOP/s"))
+data = organize_data(get_info("FLOPS_DP", "AVX DP [MFLOP/s]"))
 plot_from_data(data, "graphics", "FLOPS_AVX_DP.png")
 
 plot_time("results/time.csv")
