@@ -192,30 +192,88 @@ A geração dos dados de entrada para cada teste foi realizada utilizando o prog
 
 Os resultados são apresentados em conjuntos de gráficos de linha, onde o eixo das abscissas (K) e, para tempos, o eixo das ordenadas (tempo), estão em escala logarítmica. Cada gráfico contém quatro linhas, representando as combinações: N1​+v1, N1​+v2, N2​+v1 e N2​+v2.
 
-Foi comparado o desempenho das duas versões em relação a: (A) geração do SL pelo Método dos Mínimos Quadrados e (B) solução do SL pelo Método da Eliminação de Gauss.
+Foi comparado o desempenho das duas versões em relação a: (A) geração do SL pelo Método dos Mínimos Quadrados e (B) solução do SL pelo Método da Eliminação de Gauss. O objetivo é entender como as alterações no código impactam o tempo de execução, o uso de cache, o consumo de energia e as operações aritméticas, tanto na geração do sistema linear (SL) quanto na sua solução.
+
 
 ### Gráficos de Tempo de Execução
-Esses gráficos mostram o tempo gasto para cada etapa do programa.
+Esses gráficos mostram o tempo gasto para cada etapa do programa  usando `timestamp()`.
 
-- Gráfico 01
-[Inserir gráfico aqui]
+- **Gráfico 01: (A) geração do SL pelo Método dos Mínimos Quadrados**
 
-Explicação Gráfico 01: [Inserir explicação aqui]
+![alt text](graphics/a/TIME.png)
+
+Explicação Gráfico 01: O gráfico compara o desempenho de duas versões do programa (`v1` e `v2`) para diferentes graus de polinômio (`N=10` e `N=1000`), em função do número de pontos de entrada (`K`).
+
+
+- **Gráfico 02: (B) solução do SL pelo Método da Eliminação de Gauss**
+
+![alt text](graphics/b/TIME.png)
+
+Explicação Gráfico 02: [Inserir explicação aqui]
+
 
 ### Gráficos de Cache Miss L3
 Esses gráficos mostram a taxa de cache misses na cache L3 com o resultado de "cache miss RATIO".
 
-- Gráfico
+- **Gráfico 01:**
+
+![alt text](graphics/a/L3_MISS_RATIO.png)
+
+Explicação Gráfico 01:
+
+- **Gráfico 02:**
+
+![alt text](graphics/b/L3_MISS_RATIO.png)
+
+Explicação Gráfico 02:
+
 
 ### Gráficos de Energia
 Esses gráficos mostram o consumo de energia durante a execução, utilizando o grupo ENERGY do LIKWID com o resultado de "Energy [J]".
 
-- Gráfico 
+- **Gráfico 01:**
+
+![alt text](graphics/a/ENERGY_LOG.png)
+
+Explicação Gráfico 01:
+
+
+- **Gráfico 02:**
+
+![alt text](graphics/b/ENERGY_LOG.png)
+
+Explicação Gráfico 02:
+
+
 
 ### Gráficos de Operações Aritméticas
 Esses gráficos mostram o desempenho em operações de ponto flutuante, utilizando o grupo FLOPS_DP do LIKWID e reportar FLOPS DP e FLOPS AVX DP, em MFLOP/s.
 
-- Gráfico
+- **Gráfico 01:**
+
+![alt text](graphics/a/FLOPS_DP.png)
+
+Explicação Gráfico 01:
+
+- **Gráfico 02:**
+
+![alt text](graphics/a/FLOPS_AVX_DP.png)
+
+Explicação Gráfico 01:
+
+- **Gráfico 03:**
+
+![alt text](graphics/b/FLOPS_DP.png)
+
+Explicação Gráfico 01:
+
+- **Gráfico 04:**
+
+![alt text](graphics/b/FLOPS_AVX_DP.png)
+
+Explicação Gráfico 01:
+
+
 
 #### Resultados de AVX Flops
 Escrever aqui.
